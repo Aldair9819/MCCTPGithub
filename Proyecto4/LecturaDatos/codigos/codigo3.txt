@@ -1,0 +1,60 @@
+Programa miPrimerCodigo1.1{
+entero baseA = 15
+entero alturaG = 17
+real areaD = 17.5
+texto nombre 
+
+sinoLa(){
+imprime ~si no si jaja~
+imprime ~salto~
+imprime ~llamo funcion~
+imprime ~salto~
+}
+imprimeCosas(){
+imprime ~Funcion nueva~
+imprime ~salto~
+imprime ~Imprime algo~
+imprime ~salto~
+}
+
+inicio(){
+sinoLa()
+imprime ~sinoLa() probando~
+imprime ~salto~
+entero base   
+entero altura   
+real area   		
+leer base   
+leer altura   
+area = base * altura / 2
+imprime ~El valor de base es: ~
+imprime base
+imprime ~salto~
+imprime ~El valor de altura es: ~    
+imprime altura   
+imprime ~salto~   	
+imprime ~El valor de area es: ~    
+imprime area 
+imprime ~salto~
+imprimeCosas()
+}
+
+
+
+final{
+si (x>2){
+entero final
+entero beast
+}
+}
+
+last{
+mientras(condicion){
+entero dos
+entero mas
+}
+}
+
+
+
+}
