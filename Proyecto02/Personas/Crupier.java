@@ -1,0 +1,20 @@
+package Proyecto02.Personas;
+
+public class Crupier extends Jugador {
+	
+	public Crupier(String nombre, int numeroFichas) {
+		super(nombre, numeroFichas);
+	}
+
+	public String toString() {
+		String datos="\n";
+		datos+= manoJugador();
+		return datos;
+	}
+	
+	public String cartaCrupier() {
+		return this.getCartas(0).toString();
+	}
+	
+
+}

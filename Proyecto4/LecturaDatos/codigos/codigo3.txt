@@ -4,21 +4,21 @@ entero alturaG = 17
 real areaD = 17.5
 texto nombre 
 
-sinoLa(){
+void sinoLa(int x, int y){
 imprime ~si no si jaja~
 imprime ~salto~
 imprime ~llamo funcion~
 imprime ~salto~
 }
-imprimeCosas(){
+void imprimeCosas(){
 imprime ~Funcion nueva~
 imprime ~salto~
 imprime ~Imprime algo~
 imprime ~salto~
 }
 
-inicio(){
-sinoLa()
+void inicio(){
+sinoLa(0,0)
 imprime ~sinoLa() probando~
 imprime ~salto~
 entero base   

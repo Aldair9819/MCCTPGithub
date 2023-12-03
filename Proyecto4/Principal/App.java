@@ -12,6 +12,16 @@ public class App {
       a.accion("imprime ('hello wey')");
       a.accion("imprimeS (' como estas wey')");
       a.accion("imprimeS ('--Prueba de salto de linea',12,' la base es de:',base)");
-      System.out.print("Hey");
+      System.out.println("Hey:");
+
+      String comandos = "int sinoLa(int x, int y){";
+      String retorno = comandos.substring(0, comandos.indexOf(" ")).replace(" ", "");
+			String nombreFuncion = comandos.substring(comandos.indexOf(" ")+1, comandos.indexOf("("));
+			String parametrosFuncion = comandos.substring(comandos.indexOf("(")+1, comandos.indexOf(")"));
+
+      System.out.println(retorno);
+      System.out.println(nombreFuncion);
+      System.out.println(parametrosFuncion);
+
     }
 }

@@ -9,9 +9,6 @@ import java.util.Stack;
 
 import Proyecto4.Constantes.CASOCICLO;
 import Proyecto4.Constantes.CM;
-import Proyecto4.Constantes.LITVAR;
-import Proyecto4.Constantes.OPCOMPARAR;
-import Proyecto4.Constantes.OPERADOR;
 import java.util.Map.Entry;
 
 public class LectorTXT {
@@ -21,6 +18,7 @@ public class LectorTXT {
 	//private final String Ruta = NombreCarpeta+ "\\"+NombreArchivo;
 	private final String Ruta = "C:/Users/Waldosir/Desktop/Tecno de Progra/MCCTPGithub/Proyecto4/LecturaDatos/codigos/codigo2.txt";
 	
+	// nombreFuncion, comandos (Stack), parametros, tipo de retorno
 	private HashMap<String, Stack<String> > funciones = new HashMap<>();
 	private ArrayList<String> literalesGlobales = new ArrayList<String>();
 	private String nombrePrograma="";
@@ -28,13 +26,13 @@ public class LectorTXT {
 	private Stack<String> llavesFuncion = new Stack<String>();
 	private Stack<String> llavesDemas = new Stack<String>();
 	
-	public ArrayList<String> leerTexto() {//Lista de todos los usuarios y sus datos
+	public ArrayList<String> leerTexto() {//Lista de funciones y sus datos
 		ArrayList<String> informacion = new ArrayList<String>();
 		try(BufferedReader bf = new BufferedReader(new FileReader(Ruta))){//Lee los datos
 			String s;
 			while((s = bf.readLine())!=null) {//Hasta que no haya linea para leer
 				if(!s.replace(" ", "").equals(""))
-				informacion.add(s);//Se anade el usuario a la lista
+				informacion.add(s);//Se anade la linea a la
 				}
 			}
 		catch(IOException ex) {
@@ -78,23 +76,23 @@ System.out.println("Datos globales:");
 	
 	public void organizarPrograma(ArrayList<String> programa) {
 		boolean anadirComandos= false;
-		String nombreFuncion="";
+		String nombreFuncion=""; String parametrosFuncion = ""; String retorno = "";
 		Stack<String> datos = new Stack<String>();
 		for(String comandos:programa) {
-			if(isPrograma(comandos)) {
+			if(isPrograma(comandos)) { //Permite obtener el nombre del programa
 				this.nombrePrograma = comandos.replace("Programa", "");
 				this.nombrePrograma = this.nombrePrograma.replace("{", "");
 				this.nombrePrograma = this.nombrePrograma.replace(" ", "");
-			} else if(isFuncion(comandos) &&!isNotFunction(comandos)) {
-				for (char caracter : comandos.toCharArray()) {
-					if(!((caracter == '{') || (caracter == ' ') )) {
-						nombreFuncion+=caracter;
-					}
-				}
+			} else if(isFuncion(comandos)) {//Es una funcion ---->>>>>>
+				retorno = comandos.substring(0, comandos.indexOf(" ")).replace(" ", "");
+				nombreFuncion = comandos.substring(comandos.indexOf(" ")+1, comandos.indexOf("("));
+				parametrosFuncion = comandos.substring(comandos.indexOf("(")+1, comandos.indexOf(")"));
 				anadirComandos = true;
 			}else if(terminaFuncion(comandos)) {
-			funciones.put(nombreFuncion, datos);
+			funciones.put(nombreFuncion, new Funcion(datos, parametrosFuncion, retorno).getComandos());
 			nombreFuncion = "";
+			parametrosFuncion = "";
+			retorno = "";
 			datos = new Stack<String>();
 			anadirComandos = false;
 		}else if(anadirComandos) {
@@ -143,23 +141,19 @@ System.out.println("Datos globales:");
 		}
 	
 	
-	public boolean isKeyNotFunction(String texto) {
-        return CM.isComando(texto);
-	}
+
 	
 
 private boolean isNotFunction(String texto) {
-    if(OPCOMPARAR.isOPCOMPARAR(texto) || LITVAR.isDeclaracion(texto)  
-    || CASOCICLO.isCASOCICLO(texto) || OPERADOR.isOperador(texto) ) {
+    if(CM.isComando(texto) || CASOCICLO.isCASOCICLO(texto) ) {
         return true;
     }
     return false;
 }
 	
 	public boolean isFuncion(String texto) {
-		if(!(isKeyNotFunction(texto)) && haveKey(texto)) {
+		if(!(isNotFunction(texto)) && haveKey(texto)) {
 			llavesFuncion.push("{");
-
 			return true;
 		}else if(haveKey(texto)) {
 			llavesDemas.push("{");
