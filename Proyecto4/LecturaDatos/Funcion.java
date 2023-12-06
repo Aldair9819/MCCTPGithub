@@ -2,11 +2,10 @@ package Proyecto4.LecturaDatos;
 
 import java.util.Stack;
 
-public class Funcion<T>{
+public class Funcion{
     private Stack<String> comandos;
     private String parametros;
     private String retorno;
-    private T VALOR;
 
     public Funcion( Stack<String> comandos,String parametros, String retorno) {
         this.retorno = retorno;
@@ -14,16 +13,11 @@ public class Funcion<T>{
         this.comandos = comandos;
     }
 
-    public void inicio(){
+    public void inicio(Stack<String> funciones){
 
     }
 
-   
 
-    public <T> T tipoRetorno(){
-        T retorno ;
-        return null;
-    }
 
     public String getretorno() {
         return retorno;

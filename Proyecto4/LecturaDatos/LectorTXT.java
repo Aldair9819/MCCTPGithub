@@ -16,7 +16,7 @@ public class LectorTXT {
 	//private final String NombreArchivo = "codigo2.txt";
 	//private final String NombreCarpeta = "codigos";
 	//private final String Ruta = NombreCarpeta+ "\\"+NombreArchivo;
-	private final String Ruta = "C:/Users/Waldosir/Desktop/Tecno de Progra/MCCTPGithub/Proyecto4/LecturaDatos/codigos/codigo3.txt";
+	private final String Ruta = "*Proyecto4/LecturaDatos/codigos/codigo3.txt";
 	
 	// nombreFuncion, comandos (Stack), parametros, tipo de retorno
 	private HashMap<String, Funcion > funciones = new HashMap<>();
