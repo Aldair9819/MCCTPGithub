@@ -16,10 +16,10 @@ public class LectorTXT {
 	//private final String NombreArchivo = "codigo2.txt";
 	//private final String NombreCarpeta = "codigos";
 	//private final String Ruta = NombreCarpeta+ "\\"+NombreArchivo;
-	private final String Ruta = "C:/Users/Waldosir/Desktop/Tecno de Progra/MCCTPGithub/Proyecto4/LecturaDatos/codigos/codigo2.txt";
+	private final String Ruta = "C:/Users/Waldosir/Desktop/Tecno de Progra/MCCTPGithub/Proyecto4/LecturaDatos/codigos/codigo3.txt";
 	
 	// nombreFuncion, comandos (Stack), parametros, tipo de retorno
-	private HashMap<String, Stack<String> > funciones = new HashMap<>();
+	private HashMap<String, Funcion > funciones = new HashMap<>();
 	private ArrayList<String> literalesGlobales = new ArrayList<String>();
 	private String nombrePrograma="";
 	
@@ -55,9 +55,11 @@ public class LectorTXT {
 
 Stack<String> primero = new Stack<String>();
 
-for (Entry<String, Stack<String>> entry : funciones.entrySet()) {
+for (Entry<String, Funcion> entry : funciones.entrySet()) {
     System.out.println("Funcion " + entry.getKey() + ":");
-    primero.addAll(funciones.get(entry.getKey()));
+	System.out.println("Parametros: " + entry.getValue().getParametros());
+	System.out.println("Tipo de retorno: " + entry.getValue().getretorno());
+    primero.addAll(funciones.get(entry.getKey()).getComandos());
     while (true) {
         if (primero.isEmpty()) {
             break;
@@ -79,17 +81,19 @@ System.out.println("Datos globales:");
 		String nombreFuncion=""; String parametrosFuncion = ""; String retorno = "";
 		Stack<String> datos = new Stack<String>();
 		for(String comandos:programa) {
-			if(isPrograma(comandos)) { //Permite obtener el nombre del programa
+			if(comandos.contains("Programa")) { //Permite obtener el nombre del programa
 				this.nombrePrograma = comandos.replace("Programa", "");
 				this.nombrePrograma = this.nombrePrograma.replace("{", "");
 				this.nombrePrograma = this.nombrePrograma.replace(" ", "");
-			} else if(isFuncion(comandos)) {//Es una funcion ---->>>>>>
-				retorno = comandos.substring(0, comandos.indexOf(" ")).replace(" ", "");
-				nombreFuncion = comandos.substring(comandos.indexOf(" ")+1, comandos.indexOf("("));
+			} else if(isFuncion(comandos)) {
+				System.out.println(comandos);
+				String[] datosFuncion = comandos.substring(0, comandos.indexOf("(")).split(" ");
+				retorno = datosFuncion[0];
+				nombreFuncion = datosFuncion[1];
 				parametrosFuncion = comandos.substring(comandos.indexOf("(")+1, comandos.indexOf(")"));
 				anadirComandos = true;
 			}else if(terminaFuncion(comandos)) {
-			funciones.put(nombreFuncion, new Funcion(datos, parametrosFuncion, retorno).getComandos());
+			funciones.put(nombreFuncion, new Funcion(datos, parametrosFuncion, retorno));
 			nombreFuncion = "";
 			parametrosFuncion = "";
 			retorno = "";
@@ -107,10 +111,6 @@ System.out.println("Datos globales:");
 		funciones.remove("");
 	}
 	
-
-	public boolean isPrograma(String linea) {
-		return linea.contains("Programa");
-	}
 	
 	public boolean terminaPrograma(String linea) {
 		return (linea.contains("}")) &&(llavesDemas.isEmpty() && llavesFuncion.isEmpty());
@@ -122,37 +122,21 @@ System.out.println("Datos globales:");
 	}
 	
 	public boolean terminaFuncion(String linea) {
-		for (char caracter : linea.toCharArray()) {
-			if(caracter == '}') {
-				if(llavesDemas.isEmpty()) {
-					if(!terminaPrograma(linea)) {
-						llavesFuncion.pop();
-						return true;
-					}
-					
-				}else {
-					llavesDemas.pop();
+		if(linea.contains("}")){
+			if(llavesDemas.isEmpty()) {
+				if(!terminaPrograma(linea)) {
+					llavesFuncion.pop();
+					return true;
 				}
-				
-			}
-				
+		}else{
+			llavesDemas.pop();
 		}
+	}
 		return false;
 		}
 	
-	
-
-	
-
-private boolean isNotFunction(String texto) {
-    if(CM.isComando(texto) || CASOCICLO.isCASOCICLO(texto) ) {
-        return true;
-    }
-    return false;
-}
-	
 	public boolean isFuncion(String texto) {
-		if(!(isNotFunction(texto)) && haveKey(texto)) {
+		if(!(CM.isComando(texto) || CASOCICLO.isCASOCICLO(texto)) && haveKey(texto)) {
 			llavesFuncion.push("{");
 			return true;
 		}else if(haveKey(texto)) {
@@ -161,10 +145,7 @@ private boolean isNotFunction(String texto) {
 		return false;
 	}
 
-	public HashMap<String, Stack<String>> getFunciones() {
-		//return (HashMap<String, Stack<String>>) this.funciones.clone();
-		return  this.funciones;
-	}
+
 
 	public ArrayList<String> getLiteralesGlobales() {
 		return this.literalesGlobales;
@@ -172,6 +153,10 @@ private boolean isNotFunction(String texto) {
 
 	public String getNombrePrograma() {
 		return this.nombrePrograma;
+	}
+
+	public HashMap<String, Funcion> getFunciones() {
+		return this.funciones;
 	}
 /* 
 	private boolean isFunction(String linea) {

@@ -32,7 +32,7 @@ TERCERO(new String[]{"+","-"},1);
 		for(int i=0;i<OPERADOR.values().length;i++) {
 			pos = OPERADOR.values()[i].valor.length;
 			for(int j=0;j<pos;j++) {
-				if(OPERADOR.values()[i].valor[j].equals(caracter)) {
+				if(OPERADOR.values()[i].valor[j].contains(caracter)) {
 					return true;
 				}
 			}

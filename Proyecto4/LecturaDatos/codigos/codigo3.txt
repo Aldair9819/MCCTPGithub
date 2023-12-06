@@ -18,37 +18,27 @@ imprime ~salto~
 }
 
 void inicio(){
-sinoLa(0,0)
-imprime ~sinoLa() probando~
-imprime ~salto~
 entero base   
 entero altura   
 real area   		
 leer base   
 leer altura   
 area = base * altura / 2
-imprime ~El valor de base es: ~
-imprime base
-imprime ~salto~
-imprime ~El valor de altura es: ~    
-imprime altura   
-imprime ~salto~   	
-imprime ~El valor de area es: ~    
-imprime area 
-imprime ~salto~
-imprimeCosas()
+imprimeS ('El valor de base es: ',base)
+imprimeS ('El valor de altura es: ',altura)     	
+imprimeS ('El valor de area es: ',area)
 }
 
 
 
-final{
+void final(){
 si (x>2){
 entero final
 entero beast
 }
 }
 
-last{
+void last(){
 mientras(condicion){
 entero dos
 entero mas

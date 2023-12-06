@@ -13,10 +13,14 @@ SI("si"), SINO("sino"),MIENTRAS("mientras");
 	}
 	
     static public boolean isCASOCICLO(String texto) {
+		if(texto.contains("(")){
+			texto = texto.substring(0, texto.indexOf("(")).replace(" ", "");
 		for(int i=0; i<CASOCICLO.values().length;i++) {
 			if(texto.equals(CASOCICLO.values()[i].toString()))
 				return true;
 			}
+		}
+		
 				return false;
 			}
 }

@@ -15,7 +15,7 @@ public enum OPCOMPARAR{
 	}
 	static public boolean isOPCOMPARAR(String texto) {
 		for(int i=0; i<OPCOMPARAR.values().length;i++) {
-			if(texto.equals(OPCOMPARAR.values()[i].toString())) 
+			if(texto.contains(OPCOMPARAR.values()[i].toString())) 
 				return true;
 		}
 		return false;

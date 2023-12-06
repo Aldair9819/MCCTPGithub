@@ -16,15 +16,20 @@ public class InterpreteNoBucle {
         boolean saltoLinea = false;
         switch(comando){
             case "leer":
+            if(opMat.isLiteralExist(lineaSeparada[1])){
             try {
-            System.out.print("Asignar numero a "+variable+":"); 
+            System.out.print("Asignar numero a "+lineaSeparada[1]+":"); 
 			double opcion = Double.parseDouble(sc.next());
-			opMat.asignarValorLiteral(variable, opcion);
+			opMat.asignarValorLiteral(lineaSeparada[1], opcion);
 			System.out.println();
                 
             } catch (NumberFormatException e) {
                 System.out.println("Error en leer.");
             }
+            }else{
+                System.out.println("Error. No existe la variable");
+            }
+            
             break;
             case "imprimeS":
             saltoLinea = true;
@@ -49,10 +54,12 @@ public class InterpreteNoBucle {
             case "real":
 			variable = lineaSeparada[1];
 			opMat.inicializarLiteral(comando, variable);
+            System.out.println("Declarada variable "+variable+" de tipo "+comando);
             break;
 
             default:
             variable = lineaSeparada[0];
+            if(opMat.isLiteralExist(variable)){
             for(int i= 2;i<lineaSeparada.length;i++) {
                 if(isNumero(lineaSeparada[i])){
                     opMat.colocarDatoEnPila(Double.parseDouble(lineaSeparada[i]));
@@ -62,14 +69,19 @@ public class InterpreteNoBucle {
             }
             opMat.vaciarPilaOperador();
             opMat.asignarValorLiteral(variable, opMat.retiraNumPila());
-            break;
+            
+        }else{
+            System.out.println("Error. No existe la variable");
         }
+        break;
+            }
+
+            
 		}
 
     public boolean isNumero(String dato){
             try{
                 Double.parseDouble(dato);
-                System.out.println("Entra");
                 return true;
             }catch(NumberFormatException e){
                 return false;
