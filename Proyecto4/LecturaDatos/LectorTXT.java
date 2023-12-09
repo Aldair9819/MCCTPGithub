@@ -94,7 +94,11 @@ System.out.println("Datos globales:");
 				parametrosFuncion = comandos.substring(comandos.indexOf("(")+1, comandos.indexOf(")"));
 				anadirComandos = true;
 			}else if(terminaFuncion(comandos)) {
-			funciones.put(nombreFuncion, new Funcion(datos, parametrosFuncion, retorno));
+				Stack<String> temporal = new Stack<String>();
+				while(!datos.isEmpty()) {
+					temporal.push(datos.pop());
+				}
+			funciones.put(nombreFuncion, new Funcion(temporal, parametrosFuncion, retorno));
 			nombreFuncion = "";
 			parametrosFuncion = "";
 			retorno = "";

@@ -12,8 +12,8 @@ public class App {
       // primeraParte(a);
        LectorTXT l = new LectorTXT();
        l.iniciar();
-      //Ejecutor ejecutor = new Ejecutor(l.getNombrePrograma(),l.getFunciones(),l.getLiteralesGlobales());
-      //ejecutor.inicializar();
+      Ejecutor ejecutor = new Ejecutor(l.getNombrePrograma(),l.getFunciones(),l.getLiteralesGlobales());
+      ejecutor.inicializar();
       //*/
     }
 

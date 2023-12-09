@@ -34,7 +34,8 @@ public class InterpreteNoBucle {
             case "imprimeS":
             saltoLinea = true;
             case "imprime":
-            restante = linea.substring(linea.indexOf("(")+1, linea.indexOf(")"));
+            try{
+                restante = linea.substring(linea.indexOf("(")+1, linea.indexOf(")"));
             String[] separaRestante = restante.split(",");
             for(int i=0;i<separaRestante.length;i++){
                 if(opMat.isLiteralExist(separaRestante[i])){
@@ -47,6 +48,10 @@ public class InterpreteNoBucle {
             if (saltoLinea) {
                 System.out.println();
             }
+            }catch(StringIndexOutOfBoundsException e){
+                System.out.println("Error en imprime");
+            }
+            
 
             break;
 

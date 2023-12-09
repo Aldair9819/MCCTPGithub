@@ -5,16 +5,11 @@ real areaD = 17.5
 texto nombre 
 
 void sinoLa(int x, int y){
-imprime ~si no si jaja~
-imprime ~salto~
-imprime ~llamo funcion~
-imprime ~salto~
+
 }
 void imprimeCosas(){
-imprime ~Funcion nueva~
-imprime ~salto~
-imprime ~Imprime algo~
-imprime ~salto~
+imprimeS ('Funcion nueva')
+imprimeS ('Imprime algo')
 }
 
 void inicio(){
@@ -27,8 +22,13 @@ area = base * altura / 2
 imprimeS ('El valor de base es: ',base)
 imprimeS ('El valor de altura es: ',altura)     	
 imprimeS ('El valor de area es: ',area)
+imprimeCosas()
+imprimeCosas2()
 }
-
+void imprimeCosas2(){
+imprimeS ('Funcion nueva Imprime2')
+imprimeS ('Imprime algo jaja')
+}
 
 
 void final(){

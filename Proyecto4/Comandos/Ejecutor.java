@@ -23,12 +23,12 @@ public class Ejecutor {
 		this.nombrePrograma = nombrePrograma;
 		this.funciones = funciones;
 	
-		
+		/* 
 		for(int i = 0;i<variables.size();i++) {
 			initLitGlobal(variables.get(i));
 			
 		}
-		
+		*/
 		}
 	
 	private void initLitGlobal(String texto) {
@@ -89,22 +89,11 @@ public class Ejecutor {
 	
 	public void inicializar() {
 		System.out.println("Inicia programa...\n");
-		anadirFuncionALaPila("inicio");
-		
-			while(true) {
-				if(programaActual.isEmpty()) {
-					break;
-				}
-				if(this.isFuncion(programaActual.peek())) {
-					anadirFuncionALaPila(programaActual.pop());
-				}else if(!programaActual.isEmpty()) {
-					acciones.accion(programaActual.pop());
-				}else {
-					break;
-				}
-					
-
-				
+		for(Entry<String,Funcion > entry: this.funciones.entrySet()) {
+			if(entry.getKey().equals("inicio")) {
+				entry.getValue().main(this.funciones);
+				break;
+			}
 			}
 			
 		
