@@ -1,0 +1,16 @@
+Programa miPrimerCodigo1.1{
+
+void inicio(){
+entero x
+x = 0
+imprimeS ('Valor inicial de X vale:',x)
+
+mientras (x < 3){
+imprimeS ('X vale:',x)
+imprimeS ('Hola Mundo ')
+x = x + 1
+}
+
+
+}
+}

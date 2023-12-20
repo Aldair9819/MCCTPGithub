@@ -31,6 +31,8 @@ public class Funcion{
             }else if(CASOCICLO.isCASO(this.comandos.peek())){
                 retirarCaso();
                 //sc.nextLine();
+            }else if(CASOCICLO.isCICLO(this.comandos.peek())){
+                retiraBucle();
             }
             else{
                 interprete.accion(this.comandos.pop());
@@ -79,7 +81,51 @@ public class Funcion{
         this.comandos = comandos;
     }
 
-    public void retirarCaso(){
+    private void retiraBucle(){
+        boolean añadir = false;
+        Stack<String> todoCiclo = new Stack<String>();
+        LinkedHashMap<String, Stack<String>> casos = new LinkedHashMap<String, Stack<String>>();
+        String condicionCiclo = "error";
+        do{
+            if(comandos.peek().contains("}")){
+                comandos.pop();
+                llavesSiSino.pop();
+                if(llavesSiSino.isEmpty()){
+                    break;
+                }
+            }
+            else if(añadir){
+                todoCiclo.push(comandos.pop());
+            }else if(CASOCICLO.isCICLO(this.comandos.peek())){
+                llavesSiSino.push("{");
+                añadir = true;
+                condicionCiclo = comandos.pop();
+            }
+            else{
+                break;
+            }
+        }while(!comandos.isEmpty());
+        if(verificarCaso(condicionCiclo)){
+            Stack<String> nuevosComandos = new Stack<String>();
+            nuevosComandos.addAll(todoCiclo);
+            while(!todoCiclo.isEmpty()){
+                comandos.push(todoCiclo.pop());
+            }
+
+            comandos.push(condicionCiclo);
+            while(!nuevosComandos.isEmpty()){
+                comandos.push(nuevosComandos.pop());
+            }
+        }
+        
+
+            
+        }
+
+    
+
+
+    private void retirarCaso(){
         boolean añadir = false;
         Stack<String> caso = new Stack<String>();
         LinkedHashMap<String, Stack<String>> casos = new LinkedHashMap<String, Stack<String>>();
@@ -173,12 +219,6 @@ public class Funcion{
         */
         return llavesSiSino.isEmpty() && !(linea.contains(CASOCICLO.SINO.toString()) || linea.contains(CASOCICLO.SI.toString()));
     }
-    /* 
-    private boolean isCaso(String linea){
-        linea = linea.substring(0, linea.indexOf(")")).replace(" ", "");
-        return linea.equals(CASOCICLO.SI.toString()) || linea.equals(CASOCICLO.SINO.toString());
-    }
-    */
 
    
     

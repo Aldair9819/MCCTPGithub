@@ -2,9 +2,11 @@ Programa miPrimerCodigo1.1{
 
 void inicio(){
 entero x
-x = 3
+x = 2
+x = x + 1
+x = x + 2
 imprimeS ('X vale:',x)
-si (x < 3){
+si (x <= 3){
 imprimeS ('Imprime el primer caso ')
 imprimeS ('Hellou ')
 imprimeS ('Hellou ')
