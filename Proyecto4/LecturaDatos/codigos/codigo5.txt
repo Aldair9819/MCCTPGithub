@@ -2,13 +2,22 @@ Programa miPrimerCodigo1.1{
 
 void inicio(){
 entero x
+entero y
 x = 0
+y = 0
 imprimeS ('Valor inicial de X vale:',x)
+imprimeS ('Valor inicial de Y vale:',y)
 
 mientras (x < 6){
+y = 0
 imprimeS ('X vale:',x)
 imprimeS ('Hola Mundo ')
+mientras (y < 3){
+imprimeS ('Y vale:',y)
+y = y + 1
+}
 x = x + 1
+
 }
 
 

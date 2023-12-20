@@ -15,7 +15,6 @@ public class Funcion{
     private String parametros;
     private String retorno;
     private InterpreteNoBucle interprete = new InterpreteNoBucle();
-    //private Stack<String> llavesSiSino = new Stack<String>();
     private Scanner sc = new Scanner(System.in);
 
     public Funcion( Stack<String> comandos,String parametros, String retorno) {
@@ -29,11 +28,10 @@ public class Funcion{
             if(isFunction(this.comandos.peek())){
                 ejecutarFuncion(this.comandos.pop(), funciones);
             }else if(CASOCICLO.isCASO(this.comandos.peek())){
-
                 retirarCaso();
-                //sc.nextLine();
             }else if(CASOCICLO.isCICLO(this.comandos.peek())){
                 retiraBucle();
+                //sc.nextLine();
             }
             else{
                 interprete.accion(this.comandos.pop());
@@ -84,51 +82,56 @@ public class Funcion{
 
     private void retiraBucle(){
         boolean añadir = false;
-        Stack<String> todoCiclo = new Stack<String>();
+        Stack<String> caso = new Stack<String>();
         LinkedHashMap<String, Stack<String>> casos = new LinkedHashMap<String, Stack<String>>();
         Stack<String> llavesSiSino = new Stack<String>();
-        String condicionCiclo = "error";
+        String nombreCaso = "error";
+
         do{
             if(comandos.peek().contains("}")){
-                comandos.pop();
                 llavesSiSino.pop();
                 if(llavesSiSino.isEmpty()){
+                    comandos.pop();
                     break;
+                }else{
+                    caso.push(comandos.pop());
                 }
             }
             else if(añadir){
                 if(comandos.peek().contains("{")){
                     llavesSiSino.push("{");
                 }
-                todoCiclo.push(comandos.pop());
+                caso.push(comandos.pop());
+                
             }else if(CASOCICLO.isCICLO(this.comandos.peek())){
                 llavesSiSino.push("{");
                 añadir = true;
-                condicionCiclo = comandos.pop();
+                nombreCaso = comandos.pop();
             }
             else{
                 break;
             }
         }while(!comandos.isEmpty());
-        if(verificarCaso(condicionCiclo)){
-            Stack<String> nuevosComandos = new Stack<String>();
-            nuevosComandos.addAll(todoCiclo);
-            while(!todoCiclo.isEmpty()){
-                comandos.push(todoCiclo.pop());
-            }
+        if(verificarCaso(nombreCaso)){
+            Stack<String> casoAux = new Stack<String>();
+            casoAux.addAll(caso);
+            comandos.push("}");
 
-            comandos.push(condicionCiclo);
-            while(!nuevosComandos.isEmpty()){
-                comandos.push(nuevosComandos.pop());
-            }
-        }
-        
 
+            while(!caso.isEmpty()){
+                comandos.push(caso.pop());
+            }
             
+            comandos.push(nombreCaso);
+            
+
+            while(!casoAux.isEmpty()){
+                comandos.push(casoAux.pop());
+            }
+            
+            
+        }  
         }
-
-    
-
 
     private void retirarCaso(){
         boolean añadir = false;
@@ -183,9 +186,6 @@ public class Funcion{
             
         }
 
-    
-    
-
     private boolean verificarCaso(String linea){
 
         //Ejempo de linea que entra: "Si (x > 2)"
@@ -229,18 +229,9 @@ public class Funcion{
     }
 
     private boolean repetirCicloCaso(String linea, Stack<String> llavesSiSino){
-        /* 
-        System.out.println("Checa ciclo y da:"+((!comandos.isEmpty()) && (linea.contains(CASOCICLO.SINO.toString()) || linea.contains(CASOCICLO.SI.toString())|| !llavesSiSino.isEmpty())));
-        System.out.println("Primero caso:"+(!comandos.isEmpty()));
-        System.out.println("Segundo caso:"+(linea.contains(CASOCICLO.SINO.toString()) || linea.contains(CASOCICLO.SI.toString())|| !llavesSiSino.isEmpty()));
-        //*/
         return (linea.contains(CASOCICLO.SINO.toString()) || linea.contains(CASOCICLO.SI.toString())|| !llavesSiSino.isEmpty());
     }
 
-    //Creo que no se ocupa
-    private boolean terminaBucle(String linea, Stack<String> llavesSiSino){
-        return llavesSiSino.isEmpty() && !(linea.contains(CASOCICLO.MIENTRAS.toString()));
-    }
 
    
     

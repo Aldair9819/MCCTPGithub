@@ -2,18 +2,19 @@ Programa miPrimerCodigo1.1{
 
 void inicio(){
 entero x
-x = 1
+x = 5
 imprimeS ('Valor inicial de X vale:',x)
 si (x < 4){
 
 mientras (x < 6){
 imprimeS ('En el bucle X vale:',x)
+imprimeS (' ')
 imprimeS ('En el bucle Hola Mundo ')
-imprimeS ('Aqui inicia condicion ')
+imprimeS (' ')
 si (x < 3){
 imprimeS ('X esta valiendo menor a 3:',x)
+imprimeS (' ')
 }
-imprimeS ('Aqui termina condicion ')
 x = x + 1
 }
 
@@ -22,7 +23,7 @@ x = x + 1
 
 sino{
 imprimeS ('ZZImprime caso SINO ')
-imprimeS ('ZZñHellou ')
+imprimeS ('ZZYa')
 }
 
 
