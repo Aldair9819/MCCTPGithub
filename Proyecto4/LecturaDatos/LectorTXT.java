@@ -16,7 +16,7 @@ public class LectorTXT {
 	//private final String NombreArchivo = "codigo2.txt";
 	//private final String NombreCarpeta = "codigos";
 	//private final String Ruta = NombreCarpeta+ "\\"+NombreArchivo;
-	private final String Ruta = "Proyecto4/LecturaDatos/codigos/codigo3.txt";
+	private final String Ruta = "Proyecto4/LecturaDatos/codigos/codigo4.txt";
 	
 	// nombreFuncion, comandos (Stack), parametros, tipo de retorno
 	private HashMap<String, Funcion > funciones = new HashMap<>();
@@ -82,12 +82,12 @@ System.out.println("Datos globales:");
 		String nombreFuncion=""; String parametrosFuncion = ""; String retorno = "";
 		Stack<String> datos = new Stack<String>();
 		for(String comandos:programa) {
+			System.out.println("-"+comandos+"-");
 			if(comandos.contains("Programa")) { //Permite obtener el nombre del programa
 				this.nombrePrograma = comandos.replace("Programa", "");
 				this.nombrePrograma = this.nombrePrograma.replace("{", "");
 				this.nombrePrograma = this.nombrePrograma.replace(" ", "");
 			} else if(isFuncion(comandos)) {
-				System.out.println(comandos);
 				String[] datosFuncion = comandos.substring(0, comandos.indexOf("(")).split(" ");
 				retorno = datosFuncion[0];
 				nombreFuncion = datosFuncion[1];
@@ -98,6 +98,7 @@ System.out.println("Datos globales:");
 				while(!datos.isEmpty()) {
 					temporal.push(datos.pop());
 				}
+				System.out.println("Temporal esta vacio:"+temporal.isEmpty());
 			funciones.put(nombreFuncion, new Funcion(temporal, parametrosFuncion, retorno));
 			nombreFuncion = "";
 			parametrosFuncion = "";
@@ -141,7 +142,9 @@ System.out.println("Datos globales:");
 		}
 	
 	public boolean isFuncion(String texto) {
+		System.out.println("Entra para saber si es funcion:"+texto);
 		if(!(CM.isComando(texto) || CASOCICLO.isCASOCICLO(texto)) && haveKey(texto)) {
+			System.out.println("\n\nEs funcion\n\n");
 			llavesFuncion.push("{");
 			return true;
 		}else if(haveKey(texto)) {
