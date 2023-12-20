@@ -17,6 +17,9 @@ imprimeS ('Imprime el segundo caso ')
 imprimeS ('Hellou ')
 imprimeS ('Hellou ')
 imprimeS ('Hellou ')
+si (x > 5){
+imprimeS ('Imprime que es mayor a 5 ')
+}
 }
 sino{
 imprimeS ('Imprime el tercer caso ')
