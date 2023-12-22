@@ -3,7 +3,8 @@ package Proyecto4.Constantes;
 public enum OPERADOR {
 PRIMERO(new String[]{"^"},3),
 SEGUNDO(new String[]{"*","/"},2),
-TERCERO(new String[]{"+","-"},1);
+TERCERO(new String[]{"+","-"},1),
+CUARTO(new String[]{"(",")"},0);
 	
 	public final String[] valor;
 	public final int jerarquia;
@@ -43,8 +44,14 @@ TERCERO(new String[]{"+","-"},1);
 	public static boolean isMayor(String caracter1, String caracter2) {
 		return getPosicion(caracter1)>getPosicion(caracter2);
 	}
-	
-	
+
+	public static String getParentesis(){
+		return OPERADOR.values()[3].valor[0];
+	}
+
+	public static String getParentesisCerrado(){
+		return OPERADOR.values()[3].valor[1];
+	}
 
 	
 }

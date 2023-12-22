@@ -33,7 +33,6 @@ public class Ejecutor {
 	
 	private void initLitGlobal(String texto) {
 		String variable = "";
-		System.out.println("Texto---->"+texto);
 		if(CM.isComando(texto)) {
 			switch(texto.split(" ")[0]){
 			case "entero":

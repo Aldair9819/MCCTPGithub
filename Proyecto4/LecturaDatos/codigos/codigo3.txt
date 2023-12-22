@@ -18,12 +18,10 @@ entero altura
 real area   		
 leer base   
 leer altura   
-area = base * altura / 2
+area = ( ( base + 2 ) * altura / 2 )
 imprimeS ('El valor de base es: ',base)
 imprimeS ('El valor de altura es: ',altura)     	
 imprimeS ('El valor de area es: ',area)
-imprimeCosas()
-imprimeCosas2()
 }
 void imprimeCosas2(){
 imprimeS ('Funcion nueva Imprime2')

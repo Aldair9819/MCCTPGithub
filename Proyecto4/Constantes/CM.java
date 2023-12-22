@@ -14,6 +14,7 @@ LEER("leer"),  IMPRIME("imprime"),IMPRIMES("imprimeS"),ENTERO("entero"), REAL("r
 	
 	static public boolean isComando(String texto) {
 		for(int i=0; i<CM.values().length;i++) {
+			
 			try{
 				if(texto.split(" ")[0].equals(CM.values()[i].toString())) 
 				return true;
@@ -21,6 +22,10 @@ LEER("leer"),  IMPRIME("imprime"),IMPRIMES("imprimeS"),ENTERO("entero"), REAL("r
 				return false;
 			}
 			}
+
+			if(texto.contains(CM.IGUAL.toString())&& !OPCOMPARAR.isOPCOMPARAR(texto))
+			return true;
+
 			return false;	
 	}
 

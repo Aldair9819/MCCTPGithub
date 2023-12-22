@@ -1,0 +1,24 @@
+Programa miPrimerCodigo1.1{
+
+int valorPI(){
+return 4
+}
+
+int operacionSencilla(){
+return 3 * 2 + 7
+}
+
+
+void inicio(){
+entero x
+x = 5
+imprimeS ('Valor inicial de X vale:',x)
+x = 5 + valorPI()
+imprimeS ('Valor final de X vale:',x)
+
+
+
+
+
+}
+}

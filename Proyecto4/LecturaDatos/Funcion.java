@@ -16,29 +16,62 @@ public class Funcion{
     private String retorno;
     private InterpreteNoBucle interprete = new InterpreteNoBucle();
     private Scanner sc = new Scanner(System.in);
+    private String valorRetorno;
 
     public Funcion( Stack<String> comandos,String parametros, String retorno) {
-        this.retorno = retorno;
-        this.parametros = parametros;
         this.comandos = comandos;
+        this.parametros = parametros;
+        this.retorno = retorno;
+        
     }
 
     public void main(HashMap<String, Funcion> funciones){
-        while(!comandos.isEmpty()){
-            if(isFunction(this.comandos.peek())){
-                ejecutarFuncion(this.comandos.pop(), funciones);
-            }else if(CASOCICLO.isCASO(this.comandos.peek())){
-                retirarCaso();
-            }else if(CASOCICLO.isCICLO(this.comandos.peek())){
-                retiraBucle();
+        Stack <String> comandosAux = new Stack<String>();
+        comandosAux.addAll(comandos);
+        while(!comandosAux.isEmpty()){
+            if(isFunction(comandosAux.peek())){
+                ejecutarFuncion(comandosAux.pop(), funciones);
+            }else if(CASOCICLO.isCASO(comandosAux.peek())){
+                retirarCaso(comandosAux);
+            }else if(CASOCICLO.isCICLO(comandosAux.peek())){
+                retiraBucle(comandosAux);
                 //sc.nextLine();
+            }else if(isReturn(comandosAux.peek())){
+                calcularRetorno(comandosAux.pop());
+                break;
             }
             else{
-                interprete.accion(this.comandos.pop());
+                interprete.accion(comandosAux.pop());
             }
             
         }
+        comandosAux.clear();
+        valorRetorno = calcularRetorno(retorno);
 
+    }
+
+    public String sacarValorFuncion(HashMap<String, Funcion> funciones){
+        main(funciones);
+        return valorRetorno;
+    }
+
+    private String calcularRetorno(String linea){
+  
+        if(retorno.equals("void")){
+            return "";
+        }
+
+        String returnComoOperacion = "return = "+retorno.substring(7);
+        InterpreteNoBucle interpreteRetorno = new InterpreteNoBucle();
+        interpreteRetorno.accion(returnComoOperacion);
+        return interpreteRetorno.getValorLiteral("return")+"";
+        
+
+    }
+
+
+    private boolean isReturn(String linea){
+        return linea.contains("return");
     }
 
     private boolean isFunction(String linea){
@@ -80,7 +113,7 @@ public class Funcion{
         this.comandos = comandos;
     }
 
-    private void retiraBucle(){
+    private void retiraBucle(Stack <String> comandosAux){
         boolean añadir = false;
         Stack<String> caso = new Stack<String>();
         LinkedHashMap<String, Stack<String>> casos = new LinkedHashMap<String, Stack<String>>();
@@ -88,52 +121,52 @@ public class Funcion{
         String nombreCaso = "error";
 
         do{
-            if(comandos.peek().contains("}")){
+            if(comandosAux.peek().contains("}")){
                 llavesSiSino.pop();
                 if(llavesSiSino.isEmpty()){
-                    comandos.pop();
+                    comandosAux.pop();
                     break;
                 }else{
-                    caso.push(comandos.pop());
+                    caso.push(comandosAux.pop());
                 }
             }
             else if(añadir){
-                if(comandos.peek().contains("{")){
+                if(comandosAux.peek().contains("{")){
                     llavesSiSino.push("{");
                 }
-                caso.push(comandos.pop());
+                caso.push(comandosAux.pop());
                 
-            }else if(CASOCICLO.isCICLO(this.comandos.peek())){
+            }else if(CASOCICLO.isCICLO(comandosAux.peek())){
                 llavesSiSino.push("{");
                 añadir = true;
-                nombreCaso = comandos.pop();
+                nombreCaso = comandosAux.pop();
             }
             else{
                 break;
             }
-        }while(!comandos.isEmpty());
+        }while(!comandosAux.isEmpty());
         if(verificarCaso(nombreCaso)){
             Stack<String> casoAux = new Stack<String>();
             casoAux.addAll(caso);
-            comandos.push("}");
+            comandosAux.push("}");
 
 
             while(!caso.isEmpty()){
-                comandos.push(caso.pop());
+                comandosAux.push(caso.pop());
             }
             
-            comandos.push(nombreCaso);
+            comandosAux.push(nombreCaso);
             
 
             while(!casoAux.isEmpty()){
-                comandos.push(casoAux.pop());
+                comandosAux.push(casoAux.pop());
             }
             
             
         }  
         }
 
-    private void retirarCaso(){
+    private void retirarCaso(Stack <String> comandosAux){
         boolean añadir = false;
         Stack<String> caso = new Stack<String>();
         LinkedHashMap<String, Stack<String>> casos = new LinkedHashMap<String, Stack<String>>();
@@ -141,10 +174,10 @@ public class Funcion{
         String nombreCaso = "error";
 
         do{
-            if(comandos.peek().contains("}")){
+            if(comandosAux.peek().contains("}")){
                 llavesSiSino.pop();
                 if(llavesSiSino.isEmpty()){
-                    comandos.pop();
+                    comandosAux.pop();
                     casos.put(nombreCaso, caso);
 
                     añadir = false;
@@ -153,31 +186,31 @@ public class Funcion{
                     
                     
                 }else{
-                    caso.push(comandos.pop());
+                    caso.push(comandosAux.pop());
                 }
             }
             else if(añadir){
-                if(comandos.peek().contains("{")){
+                if(comandosAux.peek().contains("{")){
                     llavesSiSino.push("{");
                 }
-                caso.push(comandos.pop());
+                caso.push(comandosAux.pop());
                 
-            }else if(CASOCICLO.isCASO(this.comandos.peek())){
+            }else if(CASOCICLO.isCASO(comandosAux.peek())){
                 llavesSiSino.push("{");
                 añadir = true;
-                nombreCaso = comandos.pop();
+                nombreCaso = comandosAux.pop();
             }
             else{
                 break;
             }
-        }while(!comandos.isEmpty()&&repetirCicloCaso(comandos.peek(), llavesSiSino));
+        }while(!comandosAux.isEmpty()&&repetirCicloCaso(comandosAux.peek(), llavesSiSino));
 
 
         for(Map.Entry<String, Stack<String>> entry : casos.entrySet()) {
             String key = entry.getKey();
             if(verificarCaso(key)){
                 while(!entry.getValue().isEmpty()){
-                comandos.push(entry.getValue().pop());
+                comandosAux.push(entry.getValue().pop());
                 }
                 break;
             }

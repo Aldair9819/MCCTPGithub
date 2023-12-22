@@ -103,9 +103,12 @@ public class OpMat {
 	
 
 	public void colocarOperadorEnPila(String operador) {
-		if(pilaOperador.isEmpty()) {
+		if(pilaOperador.isEmpty()||operador.equals(OPERADOR.getParentesis())) {
 			pilaOperador.push(operador);
-		} else if(OPERADOR.isMayor(operador, pilaOperador.peek())) {
+		}else if(operador.equals(OPERADOR.getParentesisCerrado())){
+			vaciarPilaOperador();
+		}
+		else if(OPERADOR.isMayor(operador, pilaOperador.peek())) {
 			pilaOperador.push(operador);
 		}
 		else {
@@ -118,7 +121,11 @@ public class OpMat {
 		while(true) {
 			if(pilaOperador.isEmpty()) {
 				return;
-			}else {
+			}else if(pilaOperador.peek().equals(OPERADOR.getParentesis())) {
+				pilaOperador.pop();
+				return;
+			}
+			else {
 				pilaNumero.push(realizaroperacion(
 						pilaNumero.pop(),pilaNumero.pop(),pilaOperador.pop()));
 			}

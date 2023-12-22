@@ -15,6 +15,7 @@ public class InterpreteNoBucle {
 		String variable = "";
         boolean saltoLinea = false;
         switch(comando){
+            
             case "leer":
             if(opMat.isLiteralExist(lineaSeparada[1])){
             try {
@@ -63,7 +64,9 @@ public class InterpreteNoBucle {
             break;
 
             default:
+            
             variable = lineaSeparada[0];
+            System.out.println("Entra variable:"+variable);
             if(opMat.isLiteralExist(variable)){
             for(int i= 2;i<lineaSeparada.length;i++) {
                 if(isNumero(lineaSeparada[i])){
