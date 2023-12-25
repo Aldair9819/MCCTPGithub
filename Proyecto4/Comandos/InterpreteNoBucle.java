@@ -1,12 +1,21 @@
 package Proyecto4.Comandos;
 
+import java.util.HashMap;
 import java.util.Scanner;
+
+import Proyecto4.LecturaDatos.Funcion;
 
 
 
 public class InterpreteNoBucle {
     private Scanner sc = new Scanner(System.in);
-	private OpMat opMat = new OpMat();
+	private OpMat opMat;
+    private HashMap<String, Funcion > funciones;
+
+    public InterpreteNoBucle(HashMap<String, Funcion > funciones) {
+        this.funciones = funciones;
+        opMat = new OpMat(funciones);
+    }
 
 	public void accion(String linea) {
         String[] lineaSeparada = linea.split(" ");

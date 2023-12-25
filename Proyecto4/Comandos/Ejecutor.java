@@ -17,11 +17,12 @@ public class Ejecutor {
 	private HashMap<String, Funcion > funciones;
 	private Stack<String> programaActual = new Stack<String>();
 	private String nombrePrograma;
-	private InterpreteNoBucle acciones = new InterpreteNoBucle();
+	private InterpreteNoBucle acciones;
 	
 	public Ejecutor(String nombrePrograma,HashMap<String, Funcion > funciones,ArrayList<String> variables ) {
 		this.nombrePrograma = nombrePrograma;
 		this.funciones = funciones;
+		acciones = new InterpreteNoBucle(funciones);
 	
 		/* 
 		for(int i = 0;i<variables.size();i++) {

@@ -14,14 +14,17 @@ public class Funcion{
     private Stack<String> comandos;
     private String parametros;
     private String retorno;
-    private InterpreteNoBucle interprete = new InterpreteNoBucle();
+    private InterpreteNoBucle interprete;
     private Scanner sc = new Scanner(System.in);
     private String valorRetorno;
+    private HashMap<String, Funcion> funciones;
 
-    public Funcion( Stack<String> comandos,String parametros, String retorno) {
+    public Funcion( Stack<String> comandos,String parametros, String retorno, HashMap<String, Funcion> funciones) {
         this.comandos = comandos;
         this.parametros = parametros;
         this.retorno = retorno;
+        this.funciones = funciones;
+        this.interprete = new InterpreteNoBucle(funciones);
         
     }
 

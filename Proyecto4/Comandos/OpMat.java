@@ -5,14 +5,20 @@ import java.util.Stack;
 import java.util.Map.Entry;
 
 import Proyecto4.Constantes.OPERADOR;
+import Proyecto4.LecturaDatos.Funcion;
 
 public class OpMat {
+
+	private HashMap<String, Funcion > funciones;
     private HashMap<String,Integer> tablaInt = new HashMap<>();
 	private HashMap<String,Double> tablaDouble = new HashMap<>();
 	
 	private Stack<Double> pilaNumero = new Stack<Double>();
 	private Stack<String> pilaOperador = new Stack<String>();
 	
+	public OpMat(HashMap<String, Funcion > funciones) {
+		this.funciones = funciones;
+	}
 	
 	//Inicializa literales
 	public void inicializarLiteral(String tipo, String nombre) {
@@ -117,6 +123,10 @@ public class OpMat {
 		}
 	}
 
+	public boolean isFuncion(String linea){
+		return true;
+	}
+
     public void vaciarPilaOperador() {
 		while(true) {
 			if(pilaOperador.isEmpty()) {
@@ -142,12 +152,17 @@ public class OpMat {
 			colocarOperadorEnPila(valor);
 		}else if(isLiteralExist(valor)) {
 			pilaNumero.push(buscarLiteral(valor));
+		}else if(isFuncion(valor)) {
+
 		}
         else {
 			System.out.println("No se anadio a la pila. Compruebe el nombre de "+valor);
 		}
 	}
 
+	private void sacarDatoDeFuncion(String valor){
+
+	}
 	public void colocarDatoEnPila(double valor) {
 		pilaNumero.push(valor);
 	}
