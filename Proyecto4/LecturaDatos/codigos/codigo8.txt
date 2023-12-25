@@ -1,0 +1,54 @@
+Programa miPrimerCodigo1.1{
+entero baseA = 15
+entero alturaG = 17
+real areaD = 17.5
+
+int sinoLa(entero x,entero y){
+entero final
+final = x + y
+imprimeS ('Valor de final dentro de funcion es: ',final)
+return final
+}
+void imprimeCosas(){
+imprimeS ('Funcion nueva')
+imprimeS ('Imprime algo')
+}
+
+void inicio(){
+entero base   
+entero altura
+entero suma   
+real area   		
+leer base   
+leer altura
+imprimeCosas2()
+suma = sinoLa(base,altura)
+area = ( ( base + 2 ) * altura / 2 )
+imprimeS ('El valor de base es: ',base)
+imprimeS ('El valor de altura es: ',altura)     	
+imprimeS ('El valor de area es: ',area)
+imprimeS ('El valor de suma es: ',suma)
+}
+void imprimeCosas2(){
+imprimeS ('Funcion nueva Imprime2')
+imprimeS ('Imprime algo jaja')
+}
+
+
+void final(){
+si (x>2){
+entero final
+entero beast
+}
+}
+
+void last(){
+mientras(condicion){
+entero dos
+entero mas
+}
+}
+
+
+
+}

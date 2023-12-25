@@ -24,43 +24,60 @@ public class Ejecutor {
 		this.funciones = funciones;
 		acciones = new InterpreteNoBucle(funciones);
 	
-		/* 
+		 
 		for(int i = 0;i<variables.size();i++) {
 			initLitGlobal(variables.get(i));
 			
 		}
-		*/
+		//*/
 		}
 	
 	private void initLitGlobal(String texto) {
-		String variable = "";
-		if(CM.isComando(texto)) {
-			switch(texto.split(" ")[0]){
+		
+		if(texto.contains("=")) {
+			acciones.accion(texto);
+			String valor = acciones.getValorLiteral(texto.split(" ")[1])+"";
+			switch(texto.split(" ")[0]) {
+			case "entero":
+				if(valor.contains("."))
+					valor = valor.substring(0, valor.indexOf("."));
+				tablaGInt.put(texto.split(" ")[1], Integer.parseInt(valor));
+				break;
+			case "real":
+				tablaGDouble.put(texto.split(" ")[1], Double.parseDouble(valor));
+				break;
+			case "texto":
+				tablaGTexto.put(texto.split(" ")[1], valor);
+				break;
+			default:
+				System.out.println("Error en la declaracion de variables globales");
+				break;
+			}
+
+		}else if(CM.isComando(texto)){
+			switch(texto.split(" ")[0]) {
 			case "entero":
 				tablaGInt.put(texto.split(" ")[1], 0);
 				break;
 			case "real":
 				tablaGDouble.put(texto.split(" ")[1], 0.0);
 				break;
-			case "texto":
+			case "string":
 				tablaGTexto.put(texto.split(" ")[1], "");
+				break;
+			default:
+				System.out.println("Error en la declaracion de variables globales");
 				break;
 			}
 
-			if(texto.contains(CM.IGUAL.toString())){
-				variable = texto.split(" ")[1];
-				acciones.accion(texto.substring(texto.indexOf(variable), texto.length()));
-				colocarValorEnLiteralG(variable,acciones.getValorLiteral(variable));
-
-			}
-
+		}
 		
-		}else{
+		else{
 			System.out.println("Error en la declaracion de variables globales");
 		}
 	}
 
-	public void colocarValorEnLiteralG(String nombre,double numero){
+	private void colocarValorEnLiteralG(String nombre,double numero){
 		for(Entry<String, Integer> entry: tablaGInt.entrySet()) {
 			if(entry.getKey().equals(nombre)) {
 				tablaGInt.put(nombre, (int)numero);
@@ -77,7 +94,7 @@ public class Ejecutor {
 		System.out.println("No se encuentra el valor");
 	}
 
-	public void colocarValorEnLiteralG(String nombre,String texto){
+	private void colocarValorEnLiteralG(String nombre,String texto){
 		for(Entry<String, String> entry: tablaGTexto.entrySet()) {
 			if(entry.getKey().equals(nombre)) {
 				tablaGTexto.put(nombre, texto);
@@ -91,7 +108,7 @@ public class Ejecutor {
 		System.out.println("Inicia programa...\n");
 		for(Entry<String,Funcion > entry: this.funciones.entrySet()) {
 			if(entry.getKey().equals("inicio")) {
-				entry.getValue().main(this.funciones);
+				entry.getValue().main(this.funciones,"");
 				break;
 			}
 			}

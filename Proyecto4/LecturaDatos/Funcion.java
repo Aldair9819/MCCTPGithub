@@ -24,8 +24,9 @@ public class Funcion{
         this.retorno = retorno;
     }
 
-    public void main(HashMap<String, Funcion> funciones){
+    public void main(HashMap<String, Funcion> funciones,String parametrosEntrada){
         this.interprete = new InterpreteNoBucle(funciones);
+        declararParametros(parametrosEntrada);
         Stack <String> comandosAux = new Stack<String>();
         comandosAux.addAll(comandos);
         while(!comandosAux.isEmpty()){
@@ -45,14 +46,34 @@ public class Funcion{
             }
             
         }
-        
-        
-        
 
     }
 
-    public String sacarValorFuncion(HashMap<String, Funcion> funciones){
-        main(funciones);
+    private void declararParametros(String parametrosEntrada){
+        //Sin filtro: (2,5,7)
+        //Parametro entrada ejemplo: 2,5,7
+        if(parametrosEntrada.equals("")){
+            return;
+        }
+        System.out.println("Entra:-"+parametrosEntrada+"-");
+         String[] variablesParametros = parametros.split(",");
+         String[] variablesEntrada = parametrosEntrada.split(",");
+         for(int i = 0; i<variablesParametros.length;i++){
+             this.interprete.accion(variablesParametros[i]);
+
+             ///AQUI VA EL RESTO DE LA FUNCION
+             if(this.interprete.isNumero(variablesEntrada[i])){
+                this.interprete.accion(variablesParametros[i].split(" ")[1]+" = "+variablesEntrada[i]);
+             }else{
+                this.interprete.accion(variablesParametros[i].split(" ")[1]+" = "+this.interprete.getValorLiteral(variablesEntrada[i]));
+             }
+             
+         }
+    }
+
+    public String sacarValorFuncion(HashMap<String, Funcion> funciones, String declararParametros){
+        //Aqui también ya llega con filtro
+        main(funciones, declararParametros);
         return valorRetorno;
     }
 
@@ -92,9 +113,11 @@ public class Funcion{
     }
 
     private void ejecutarFuncion(String linea, HashMap<String, Funcion> funciones){
+        //Aqui aplica filtro
+        String parametrosEntrada = linea.substring(linea.indexOf("(")+1, linea.indexOf(")"));
         for(int i = 0; i<funciones.size();i++){
             if(linea.contains(funciones.keySet().toArray()[i].toString())){
-                funciones.get(funciones.keySet().toArray()[i]).main(funciones);
+                funciones.get(funciones.keySet().toArray()[i]).main(funciones, parametrosEntrada);
             }
         }
 

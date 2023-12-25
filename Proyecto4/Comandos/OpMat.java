@@ -12,7 +12,9 @@ public class OpMat {
 	private HashMap<String, Funcion > funciones;
     private HashMap<String,Integer> tablaInt = new HashMap<>();
 	private HashMap<String,Double> tablaDouble = new HashMap<>();
+	private HashMap<String,String> tablaTexto = new HashMap<>();
 	
+	private Stack<String> pilaTexto = new Stack<String>();
 	private Stack<Double> pilaNumero = new Stack<Double>();
 	private Stack<String> pilaOperador = new Stack<String>();
 	
@@ -29,6 +31,9 @@ public class OpMat {
             case "real":
                 tablaDouble.put(nombre, 0.0);
                 break;
+			case "texto":
+				tablaTexto.put(nombre, "");
+				break;
             default:
                 System.out.println("Error en inicializar Literales");
                 break;
@@ -51,8 +56,28 @@ public class OpMat {
 		}
         System.out.println("No se encontro el literal "+Literales);
 	}
+
+	public void asignarValorVariable(String Literales, String valor) { 
+		for(Entry<String, String> entry: tablaTexto.entrySet()) {
+			if(entry.getKey().equals(Literales)) {
+				tablaTexto.put(Literales, valor);
+                return;
+			}
+		}
+        System.out.println("No se encontro el literal "+Literales);
+	}
 	
-	
+	public String buscarVariableTexto(String nombre){
+		for(Entry<String, String> entry: tablaTexto.entrySet()) {
+			if(entry.getKey().equals(nombre)) {
+				return entry.getValue();
+			}
+		}
+
+		System.out.print(nombre+" no existe.");
+		return "";
+	}
+
 	public double buscarLiteral(String nombre) {
 		for(Entry<String, Integer> entry: tablaInt.entrySet()) {
 			if(entry.getKey().equals(nombre)) {
@@ -82,6 +107,28 @@ public class OpMat {
 			}
 		}
 		return false;
+	}
+
+	public boolean isVariableTextoExist(String nombre){
+		for(Entry<String, String> entry: this.tablaTexto.entrySet()) {
+			if(entry.getKey().equals(nombre)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private String realizaroperacion(String y, String x, String operador){
+		String valor = "";
+		switch(operador) {
+		case "+":
+			valor = x+y;
+			break;
+		case "-":
+			valor = x.replace(y, "");
+			break;
+		}		
+		return valor;
 	}
 	
 	public double realizaroperacion(double y, double x, String operador) {
@@ -141,8 +188,13 @@ public class OpMat {
 				return;
 			}
 			else {
-				pilaNumero.push(realizaroperacion(
+				if(pilaTexto.isEmpty()){
+					pilaNumero.push(realizaroperacion(
 						pilaNumero.pop(),pilaNumero.pop(),pilaOperador.pop()));
+				}else{
+					pilaTexto.push(realizaroperacion(pilaTexto.pop(), pilaTexto.pop(), pilaOperador.pop()));
+				}
+				
 			}
 		}
 		
@@ -151,16 +203,34 @@ public class OpMat {
     public double retiraNumPila(){
         return pilaNumero.pop();
     }
+
+	public String retiraTextoPila(){
+        return pilaTexto.pop();
+    }
+
+	public void colocarDatoEnPilaString(String valor) {
+		if(OPERADOR.isOperador(valor)) {
+			colocarOperadorEnPila(valor);
+		}else if(isVariableTextoExist(valor)){
+			pilaTexto.push(buscarVariableTexto(valor));
+		}else if (valor.contains("'")) {
+			pilaTexto.push(valor.replace("'", ""));
+		}else{
+			System.out.println("Error en colocar dato pila String. Compruebe el nombre de "+valor);
+		}
+	}
 	
 	public void colocarDatoEnPila(String valor) {
 		if(OPERADOR.isOperador(valor)) {
 			colocarOperadorEnPila(valor);
-		}else if(isLiteralExist(valor)) {
+		}
+		else if(isLiteralExist(valor)) {
 			pilaNumero.push(buscarLiteral(valor));
 		}else if(isFuncion(valor)) {
 			sacarDatoDeFuncion(valor);
 		}
-        else {
+        
+		else{
 			System.out.println("No se anadio a la pila. Compruebe el nombre de "+valor);
 		}
 	}
@@ -168,7 +238,17 @@ public class OpMat {
 	private void sacarDatoDeFuncion(String linea){
 		for(Entry<String, Funcion> entry: this.funciones.entrySet()) {
 			if(linea.contains(entry.getKey())) {
-				String valor = entry.getValue().sacarValorFuncion(funciones);
+				String parametrosEntradaInicial = linea.substring(linea.indexOf("(")+1, linea.indexOf(")"));
+				String[] separar = parametrosEntradaInicial.split(",");
+				String parametrosEntrada = "";
+				for(int i=0;i<separar.length;i++){
+					if(isLiteralExist(separar[i])){
+						parametrosEntrada += buscarLiteral(separar[i])+",";
+					}	
+				}
+				parametrosEntrada = parametrosEntrada.substring(0, parametrosEntrada.length()-1);
+
+				String valor = entry.getValue().sacarValorFuncion(funciones, parametrosEntrada);
 				if(entry.getValue().getretorno().equals("entero")){
 					if(valor.contains(".")){
 						valor = valor.substring(0, valor.indexOf("."));

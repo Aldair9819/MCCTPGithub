@@ -64,7 +64,7 @@ public class InterpreteNoBucle {
             
 
             break;
-
+            case "texto":
             case "entero":
             case "real":
 			variable = lineaSeparada[1];
@@ -88,7 +88,19 @@ public class InterpreteNoBucle {
             if(!variable.equals("return"))
             System.out.println("Se asigno el valor "+opMat.buscarLiteral(variable)+" a la variable "+variable);
             
-        }else{
+        }else if(opMat.isVariableTextoExist(variable)){
+            String[] separacionTexto;
+            for(int i= 2;i<lineaSeparada.length;i++) {
+                opMat.colocarDatoEnPilaString(lineaSeparada[i]);
+            }
+            opMat.vaciarPilaOperador();
+            opMat.asignarValorVariable(variable, opMat.retiraTextoPila());
+            if(!variable.equals("return")){
+                System.out.println("Se asigno el valor -"+opMat.buscarVariableTexto(variable)+"- a la variable "+variable);
+            }
+            
+        }
+        else{
             System.out.println("Error. No existe la variable");
         }
         break;

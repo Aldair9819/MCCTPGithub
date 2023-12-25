@@ -1,0 +1,27 @@
+Programa miPrimerCodigo1.1{
+
+int sinoLa(entero x,entero y){
+entero final
+final = x + y
+imprimeS ('Valor de final dentro de funcion es: ',final)
+return final
+}
+void imprimeCosas(){
+imprimeS ('Funcion nueva')
+imprimeS ('Imprime algo')
+}
+
+void inicio(){
+texto hola
+hola = 'hello there'
+imprimeS ('El valor de hola es: ',hola)
+}
+void imprimeCosas2(){
+imprimeS ('Funcion nueva Imprime2')
+imprimeS ('Imprime algo jaja')
+}
+
+
+
+
+}
