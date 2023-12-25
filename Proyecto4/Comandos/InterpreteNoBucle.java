@@ -69,13 +69,12 @@ public class InterpreteNoBucle {
             case "real":
 			variable = lineaSeparada[1];
 			opMat.inicializarLiteral(comando, variable);
+            if(!variable.equals("return"))
             System.out.println("Declarada variable "+variable+" de tipo "+comando);
             break;
 
             default:
-            
             variable = lineaSeparada[0];
-            System.out.println("Entra variable:"+variable);
             if(opMat.isLiteralExist(variable)){
             for(int i= 2;i<lineaSeparada.length;i++) {
                 if(isNumero(lineaSeparada[i])){
@@ -86,6 +85,8 @@ public class InterpreteNoBucle {
             }
             opMat.vaciarPilaOperador();
             opMat.asignarValorLiteral(variable, opMat.retiraNumPila());
+            if(!variable.equals("return"))
+            System.out.println("Se asigno el valor "+opMat.buscarLiteral(variable)+" a la variable "+variable);
             
         }else{
             System.out.println("Error. No existe la variable");

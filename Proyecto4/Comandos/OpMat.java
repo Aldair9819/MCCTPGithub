@@ -124,7 +124,12 @@ public class OpMat {
 	}
 
 	public boolean isFuncion(String linea){
-		return true;
+		for(Entry<String, Funcion> entry: this.funciones.entrySet()) {
+			if(linea.contains(entry.getKey())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
     public void vaciarPilaOperador() {
@@ -153,14 +158,28 @@ public class OpMat {
 		}else if(isLiteralExist(valor)) {
 			pilaNumero.push(buscarLiteral(valor));
 		}else if(isFuncion(valor)) {
-
+			sacarDatoDeFuncion(valor);
 		}
         else {
 			System.out.println("No se anadio a la pila. Compruebe el nombre de "+valor);
 		}
 	}
 
-	private void sacarDatoDeFuncion(String valor){
+	private void sacarDatoDeFuncion(String linea){
+		for(Entry<String, Funcion> entry: this.funciones.entrySet()) {
+			if(linea.contains(entry.getKey())) {
+				String valor = entry.getValue().sacarValorFuncion(funciones);
+				if(entry.getValue().getretorno().equals("entero")){
+					if(valor.contains(".")){
+						valor = valor.substring(0, valor.indexOf("."));
+					}
+				}
+				colocarDatoEnPila(Double.parseDouble(valor));
+				break;
+			}
+		}
+
+		
 
 	}
 	public void colocarDatoEnPila(double valor) {

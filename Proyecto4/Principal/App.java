@@ -8,11 +8,13 @@ import Proyecto4.Comandos.Ejecutor;
 public class App {
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
-      InterpreteNoBucle a = new InterpreteNoBucle();
-      // primeraParte(a);
+      
+      
        LectorTXT l = new LectorTXT();
        l.iniciar();
       Ejecutor ejecutor = new Ejecutor(l.getNombrePrograma(),l.getFunciones(),l.getLiteralesGlobales());
+      InterpreteNoBucle a = new InterpreteNoBucle(l.getFunciones());
+      // primeraParte(a);
       ejecutor.inicializar();
       //*/
     }

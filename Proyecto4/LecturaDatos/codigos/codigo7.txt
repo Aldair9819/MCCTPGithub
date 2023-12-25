@@ -5,7 +5,14 @@ return 4
 }
 
 int operacionSencilla(){
-return 3 * 2 + 7
+return 12 * 2 + 7
+}
+
+double operacionArit(){
+entero z
+z = 12.3 * 2.7 + 3.9
+imprimeS ('Valor inicial de z vale:',z)
+return z
 }
 
 
@@ -13,7 +20,9 @@ void inicio(){
 entero x
 x = 5
 imprimeS ('Valor inicial de X vale:',x)
-x = 5 + valorPI()
+x = x + valorPI()
+imprimeS ('Valor segundo de X vale:',x)
+x = x + operacionArit()
 imprimeS ('Valor final de X vale:',x)
 
 

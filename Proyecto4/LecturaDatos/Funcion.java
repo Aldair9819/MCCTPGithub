@@ -17,18 +17,15 @@ public class Funcion{
     private InterpreteNoBucle interprete;
     private Scanner sc = new Scanner(System.in);
     private String valorRetorno;
-    private HashMap<String, Funcion> funciones;
 
-    public Funcion( Stack<String> comandos,String parametros, String retorno, HashMap<String, Funcion> funciones) {
+    public Funcion( Stack<String> comandos,String parametros, String retorno) {
         this.comandos = comandos;
         this.parametros = parametros;
         this.retorno = retorno;
-        this.funciones = funciones;
-        this.interprete = new InterpreteNoBucle(funciones);
-        
     }
 
     public void main(HashMap<String, Funcion> funciones){
+        this.interprete = new InterpreteNoBucle(funciones);
         Stack <String> comandosAux = new Stack<String>();
         comandosAux.addAll(comandos);
         while(!comandosAux.isEmpty()){
@@ -40,16 +37,17 @@ public class Funcion{
                 retiraBucle(comandosAux);
                 //sc.nextLine();
             }else if(isReturn(comandosAux.peek())){
-                calcularRetorno(comandosAux.pop());
-                break;
+                valorRetorno = calcularRetorno(comandosAux.pop(), funciones);
+                comandosAux.clear();
             }
             else{
                 interprete.accion(comandosAux.pop());
             }
             
         }
-        comandosAux.clear();
-        valorRetorno = calcularRetorno(retorno);
+        
+        
+        
 
     }
 
@@ -58,16 +56,28 @@ public class Funcion{
         return valorRetorno;
     }
 
-    private String calcularRetorno(String linea){
+    private String calcularRetorno(String linea, HashMap<String, Funcion> funciones){
   
         if(retorno.equals("void")){
             return "";
         }
-
-        String returnComoOperacion = "return = "+retorno.substring(7);
-        InterpreteNoBucle interpreteRetorno = new InterpreteNoBucle();
-        interpreteRetorno.accion(returnComoOperacion);
-        return interpreteRetorno.getValorLiteral("return")+"";
+        
+        switch(retorno){
+            case "int":
+            interprete.accion("entero return");
+            break;
+            case "double":
+            interprete.accion("real return");
+            break;
+            case "string":
+            interprete.accion("string return");
+            break;
+            default:
+            System.out.println("Error en retorno");
+        }
+        String returnComoOperacion = "return = "+linea.substring(7);
+        interprete.accion(returnComoOperacion);
+        return interprete.getValorLiteral("return")+"";
         
 
     }
