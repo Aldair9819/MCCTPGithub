@@ -12,9 +12,8 @@ public class pruebas {
         System.out.println(nuevo);
         //*/
         //String funcion = "Huevos(int x,int y)";
-        String funcion = "Huevos()";
-        String parametros = funcion.substring(funcion.indexOf("(")+1, funcion.indexOf(")"));
-        System.out.println("-"+parametros+"-"+"longitud:"+parametros.length());
+        String comando = "'Hey man' + variable1 + 'hola'";
+        System.out.println(comando);
 
         
     }

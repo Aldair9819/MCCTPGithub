@@ -26,11 +26,11 @@ public class InterpreteNoBucle {
         switch(comando){
             
             case "leer":
-            if(opMat.isLiteralExist(lineaSeparada[1])){
+            if(opMat.isVariableExist(lineaSeparada[1])){
             try {
             System.out.print("Asignar numero a "+lineaSeparada[1]+":"); 
 			double opcion = Double.parseDouble(sc.next());
-			opMat.asignarValorLiteral(lineaSeparada[1], opcion);
+			opMat.asignarValorVariable(lineaSeparada[1], opcion);
 			System.out.println();
                 
             } catch (NumberFormatException e) {
@@ -48,8 +48,8 @@ public class InterpreteNoBucle {
                 restante = linea.substring(linea.indexOf("(")+1, linea.indexOf(")"));
             String[] separaRestante = restante.split(",");
             for(int i=0;i<separaRestante.length;i++){
-                if(opMat.isLiteralExist(separaRestante[i])){
-                    System.out.print(opMat.buscarLiteral(separaRestante[i]));
+                if(opMat.isVariableExist(separaRestante[i])){
+                    System.out.print(opMat.buscarVariable(separaRestante[i]));
                 }else{
                     separaRestante[i] = separaRestante[i].replaceAll("'", "");
                     System.out.print(separaRestante[i]);
@@ -68,14 +68,14 @@ public class InterpreteNoBucle {
             case "entero":
             case "real":
 			variable = lineaSeparada[1];
-			opMat.inicializarLiteral(comando, variable);
+			opMat.inicializarVariable(comando, variable);
             if(!variable.equals("return"))
             System.out.println("Declarada variable "+variable+" de tipo "+comando);
             break;
 
             default:
             variable = lineaSeparada[0];
-            if(opMat.isLiteralExist(variable)){
+            if(opMat.isVariableExist(variable)){
             for(int i= 2;i<lineaSeparada.length;i++) {
                 if(isNumero(lineaSeparada[i])){
                     opMat.colocarDatoEnPila(Double.parseDouble(lineaSeparada[i]));
@@ -84,11 +84,12 @@ public class InterpreteNoBucle {
                 }    
             }
             opMat.vaciarPilaOperador();
-            opMat.asignarValorLiteral(variable, opMat.retiraNumPila());
+            opMat.asignarValorVariable(variable, opMat.retiraNumPila());
             if(!variable.equals("return"))
-            System.out.println("Se asigno el valor "+opMat.buscarLiteral(variable)+" a la variable "+variable);
+            System.out.println("Se asigno el valor "+opMat.buscarVariable(variable)+" a la variable "+variable);
             
         }else if(opMat.isVariableTextoExist(variable)){
+            ////////////////////////////////////aqui
             String[] separacionTexto;
             for(int i= 2;i<lineaSeparada.length;i++) {
                 opMat.colocarDatoEnPilaString(lineaSeparada[i]);
@@ -118,8 +119,8 @@ public class InterpreteNoBucle {
             }
         }
 
-	public double getValorLiteral(String nombre) {
-		return opMat.buscarLiteral(nombre);
+	public double getValorVariable(String nombre) {
+		return opMat.buscarVariable(nombre);
 	}
 	
 

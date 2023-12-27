@@ -8,22 +8,25 @@ import Proyecto4.Constantes.OPERADOR;
 import Proyecto4.LecturaDatos.Funcion;
 
 public class OpMat {
-
+	//ignorar esto de abajo
 	private HashMap<String, Funcion > funciones;
+	private HashMap<String,String> tablaTexto = new HashMap<>();
+	private Stack<String> pilaTexto = new Stack<String>();
+	//IGNORAR ESTO DE ARRIBA
+	
     private HashMap<String,Integer> tablaInt = new HashMap<>();
 	private HashMap<String,Double> tablaDouble = new HashMap<>();
-	private HashMap<String,String> tablaTexto = new HashMap<>();
-	
-	private Stack<String> pilaTexto = new Stack<String>();
+
 	private Stack<Double> pilaNumero = new Stack<Double>();
 	private Stack<String> pilaOperador = new Stack<String>();
 	
+	//Ignora este constructor
 	public OpMat(HashMap<String, Funcion > funciones) {
 		this.funciones = funciones;
 	}
 	
-	//Inicializa literales
-	public void inicializarLiteral(String tipo, String nombre) {
+	//Inicializa Variable
+	public void inicializarVariable(String tipo, String nombre) {
         switch(tipo){
             case "entero":
                 tablaInt.put(nombre, 0);
@@ -35,36 +38,36 @@ public class OpMat {
 				tablaTexto.put(nombre, "");
 				break;
             default:
-                System.out.println("Error en inicializar Literales");
+                System.out.println("Error en inicializar Variable");
                 break;
         }
 		}
 
-	public void asignarValorLiteral(String Literales, double valor) { 
+	public void asignarValorVariable(String Variable, double valor) { 
 		for(Entry<String, Integer> entry: tablaInt.entrySet()) {
-			if(entry.getKey().equals(Literales)) {
-				tablaInt.put(Literales, (int) valor);
+			if(entry.getKey().equals(Variable)) {
+				tablaInt.put(Variable, (int) valor);
                 return;
 			}
 		}
-		
+
 		for(Entry<String, Double> entry: tablaDouble.entrySet()) {
-			if(entry.getKey().equals(Literales)) {
-				tablaDouble.put(Literales, valor);
+			if(entry.getKey().equals(Variable)) {
+				tablaDouble.put(Variable, valor);
                 return;
 			}
 		}
-        System.out.println("No se encontro el literal "+Literales);
+        System.out.println("No se encontro la Variable "+Variable);
 	}
 
-	public void asignarValorVariable(String Literales, String valor) { 
+	public void asignarValorVariable(String Variable, String valor) { 
 		for(Entry<String, String> entry: tablaTexto.entrySet()) {
-			if(entry.getKey().equals(Literales)) {
-				tablaTexto.put(Literales, valor);
+			if(entry.getKey().equals(Variable)) {
+				tablaTexto.put(Variable, valor);
                 return;
 			}
 		}
-        System.out.println("No se encontro el literal "+Literales);
+        System.out.println("No se encontro el Variable "+Variable);
 	}
 	
 	public String buscarVariableTexto(String nombre){
@@ -78,7 +81,7 @@ public class OpMat {
 		return "";
 	}
 
-	public double buscarLiteral(String nombre) {
+	public double buscarVariable(String nombre) {
 		for(Entry<String, Integer> entry: tablaInt.entrySet()) {
 			if(entry.getKey().equals(nombre)) {
 				return entry.getValue();
@@ -94,7 +97,7 @@ public class OpMat {
 		return 0;
 	}
 	
-	public boolean isLiteralExist(String nombre) {
+	public boolean isVariableExist(String nombre) {
 		for(Entry<String, Integer> entry: this.tablaInt.entrySet()) {
 			if(entry.getKey().equals(nombre)) {
 				return true;
@@ -224,8 +227,8 @@ public class OpMat {
 		if(OPERADOR.isOperador(valor)) {
 			colocarOperadorEnPila(valor);
 		}
-		else if(isLiteralExist(valor)) {
-			pilaNumero.push(buscarLiteral(valor));
+		else if(isVariableExist(valor)) {
+			pilaNumero.push(buscarVariable(valor));
 		}else if(isFuncion(valor)) {
 			sacarDatoDeFuncion(valor);
 		}
@@ -242,8 +245,8 @@ public class OpMat {
 				String[] separar = parametrosEntradaInicial.split(",");
 				String parametrosEntrada = "";
 				for(int i=0;i<separar.length;i++){
-					if(isLiteralExist(separar[i])){
-						parametrosEntrada += buscarLiteral(separar[i])+",";
+					if(isVariableExist(separar[i])){
+						parametrosEntrada += buscarVariable(separar[i])+",";
 					}	
 				}
 				parametrosEntrada = parametrosEntrada.substring(0, parametrosEntrada.length()-1);
