@@ -154,7 +154,6 @@ public class OpMat {
 			break;		
 		}		
 		return valor;
-
 	}
 	
 

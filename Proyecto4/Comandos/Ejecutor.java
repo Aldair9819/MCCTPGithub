@@ -36,7 +36,7 @@ public class Ejecutor {
 		
 		if(texto.contains("=")) {
 			acciones.accion(texto);
-			String valor = acciones.getValorLiteral(texto.split(" ")[1])+"";
+			String valor = acciones.getValorVariable(texto.split(" ")[1])+"";
 			switch(texto.split(" ")[0]) {
 			case "entero":
 				if(valor.contains("."))
@@ -77,7 +77,7 @@ public class Ejecutor {
 		}
 	}
 
-	private void colocarValorEnLiteralG(String nombre,double numero){
+	private void colocarValorEnVariableG(String nombre,double numero){
 		for(Entry<String, Integer> entry: tablaGInt.entrySet()) {
 			if(entry.getKey().equals(nombre)) {
 				tablaGInt.put(nombre, (int)numero);
@@ -94,7 +94,7 @@ public class Ejecutor {
 		System.out.println("No se encuentra el valor");
 	}
 
-	private void colocarValorEnLiteralG(String nombre,String texto){
+	private void colocarValorEnVariableG(String nombre,String texto){
 		for(Entry<String, String> entry: tablaGTexto.entrySet()) {
 			if(entry.getKey().equals(nombre)) {
 				tablaGTexto.put(nombre, texto);

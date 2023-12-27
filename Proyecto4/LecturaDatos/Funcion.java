@@ -65,7 +65,7 @@ public class Funcion{
              if(this.interprete.isNumero(variablesEntrada[i])){
                 this.interprete.accion(variablesParametros[i].split(" ")[1]+" = "+variablesEntrada[i]);
              }else{
-                this.interprete.accion(variablesParametros[i].split(" ")[1]+" = "+this.interprete.getValorLiteral(variablesEntrada[i]));
+                this.interprete.accion(variablesParametros[i].split(" ")[1]+" = "+this.interprete.getValorVariable(variablesEntrada[i]));
              }
              
          }
@@ -98,7 +98,7 @@ public class Funcion{
         }
         String returnComoOperacion = "return = "+linea.substring(7);
         interprete.accion(returnComoOperacion);
-        return interprete.getValorLiteral("return")+"";
+        return interprete.getValorVariable("return")+"";
         
 
     }
@@ -268,11 +268,11 @@ public class Funcion{
             String valor2 = partes[2];
             
             if(!interprete.isNumero(valor1)){
-                valor1 = interprete.getValorLiteral(valor1) + "";
+                valor1 = interprete.getValorVariable(valor1) + "";
             }
 
             if(!interprete.isNumero(valor2)){
-                valor2 = interprete.getValorLiteral(valor1) + "";
+                valor2 = interprete.getValorVariable(valor1) + "";
             }
 
             switch(operador){
