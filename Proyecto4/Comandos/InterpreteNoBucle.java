@@ -1,19 +1,16 @@
 package Proyecto4.Comandos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 import Proyecto4.LecturaDatos.Funcion;
 
-
-
 public class InterpreteNoBucle {
     private Scanner sc = new Scanner(System.in);
 	private OpMat opMat;
-    private HashMap<String, Funcion > funciones;
 
     public InterpreteNoBucle(HashMap<String, Funcion > funciones) {
-        this.funciones = funciones;
         opMat = new OpMat(funciones);
     }
 
@@ -50,7 +47,10 @@ public class InterpreteNoBucle {
             for(int i=0;i<separaRestante.length;i++){
                 if(opMat.isVariableExist(separaRestante[i])){
                     System.out.print(opMat.buscarVariable(separaRestante[i]));
-                }else{
+                }else if(opMat.isVariableTextoExist(separaRestante[i])){
+                    System.out.print(opMat.buscarVariableTexto(separaRestante[i]));
+                }
+                else{
                     separaRestante[i] = separaRestante[i].replaceAll("'", "");
                     System.out.print(separaRestante[i]);
                 }
@@ -89,15 +89,20 @@ public class InterpreteNoBucle {
             System.out.println("Se asigno el valor "+opMat.buscarVariable(variable)+" a la variable "+variable);
             
         }else if(opMat.isVariableTextoExist(variable)){
-            ////////////////////////////////////aqui
-            String[] separacionTexto;
+            ArrayList<String> textoCompleto = new ArrayList<String>();
             for(int i= 2;i<lineaSeparada.length;i++) {
-                opMat.colocarDatoEnPilaString(lineaSeparada[i]);
+                textoCompleto.add(lineaSeparada[i]);
+            }
+
+            ArrayList<String> textoSeparado = separadorTexto(textoCompleto);
+
+            for(int i= 0;i<textoSeparado.size();i++) {
+                opMat.colocarDatoEnPilaString(textoSeparado.get(i));
             }
             opMat.vaciarPilaOperador();
             opMat.asignarValorVariable(variable, opMat.retiraTextoPila());
             if(!variable.equals("return")){
-                System.out.println("Se asigno el valor -"+opMat.buscarVariableTexto(variable)+"- a la variable "+variable);
+                System.out.println("Se asigno el valor de texto -"+opMat.buscarVariableTexto(variable)+"- a la variable "+variable);
             }
             
         }
@@ -110,6 +115,39 @@ public class InterpreteNoBucle {
             
 		}
 
+    private ArrayList<String> separadorTexto(ArrayList<String> textoCompleto){
+        String texto = "";
+        for(int i=0;i<textoCompleto.size();i++){
+            texto += textoCompleto.get(i)+ " ";
+        }
+        
+        String[] partes = texto.split(" ");
+        ArrayList<String> todos = new ArrayList<String>();
+        boolean combinar = false;
+        for(int i=0;i<partes.length;i++){
+            if(contarRepeticionSimbolo(partes[i], "'") == 2){
+                todos.add(partes[i]);
+            }else if(contarRepeticionSimbolo(partes[i], "'") == 1){
+                if(!combinar){
+                    combinar = true;
+                    todos.add(partes[i]);
+                }else{
+                    todos.set(todos.size()-1, todos.get(todos.size()-1)+" "+partes[i]);
+                    combinar = false;
+                }
+            }else if(combinar){
+                todos.set(todos.size()-1, todos.get(todos.size()-1)+" "+partes[i]);
+            }else{
+                todos.add(partes[i]);
+            }
+        }
+        return todos;
+    }
+
+    public int contarRepeticionSimbolo(String texto, String simbolo){
+        return texto.length() - texto.replace(simbolo, "").length();
+    }
+
     public boolean isNumero(String dato){
             try{
                 Double.parseDouble(dato);
@@ -121,6 +159,10 @@ public class InterpreteNoBucle {
 
 	public double getValorVariable(String nombre) {
 		return opMat.buscarVariable(nombre);
+	}
+
+    public String getValorVariableTexto(String nombre) {
+		return opMat.buscarVariableTexto(nombre);
 	}
 	
 

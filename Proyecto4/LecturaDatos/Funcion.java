@@ -4,7 +4,7 @@ import java.util.Stack;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import Proyecto4.Comandos.InterpreteNoBucle;
 import Proyecto4.Constantes.CASOCICLO;
@@ -15,7 +15,7 @@ public class Funcion{
     private String parametros;
     private String retorno;
     private InterpreteNoBucle interprete;
-    private Scanner sc = new Scanner(System.in);
+    //private Scanner sc = new Scanner(System.in);
     private String valorRetorno;
 
     public Funcion( Stack<String> comandos,String parametros, String retorno) {
@@ -152,7 +152,6 @@ public class Funcion{
     private void retiraBucle(Stack <String> comandosAux){
         boolean añadir = false;
         Stack<String> caso = new Stack<String>();
-        LinkedHashMap<String, Stack<String>> casos = new LinkedHashMap<String, Stack<String>>();
         Stack<String> llavesSiSino = new Stack<String>();
         String nombreCaso = "error";
 

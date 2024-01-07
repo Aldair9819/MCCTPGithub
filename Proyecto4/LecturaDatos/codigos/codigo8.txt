@@ -35,19 +35,6 @@ imprimeS ('Imprime algo jaja')
 }
 
 
-void final(){
-si (x>2){
-entero final
-entero beast
-}
-}
-
-void last(){
-mientras(condicion){
-entero dos
-entero mas
-}
-}
 
 
 

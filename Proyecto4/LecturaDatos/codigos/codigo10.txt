@@ -1,0 +1,20 @@
+Programa miPrimerCodigo1.1{
+entero baseA = 15
+entero alturaG = 17
+real areaD = 17.5
+texto prueba = 'Hi there'
+
+void inicio(){
+entero base   
+entero altura   
+real area   		
+leer base   
+leer altura
+imprimeS ('El valor de base es: ',base)
+imprimeS ('El valor de altura es: ',altura)  
+
+}
+
+
+
+}

@@ -13,7 +13,9 @@ imprimeS ('Imprime algo')
 
 void inicio(){
 texto hola
-hola = 'hello there'
+texto bruh
+bruh = 'This is a bruh message'
+hola = 'hello there ' + 'hi ' + bruh
 imprimeS ('El valor de hola es: ',hola)
 }
 void imprimeCosas2(){

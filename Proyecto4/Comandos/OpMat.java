@@ -109,6 +109,7 @@ public class OpMat {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -231,10 +232,13 @@ public class OpMat {
 		}else if(isFuncion(valor)) {
 			sacarDatoDeFuncion(valor);
 		}
-        
 		else{
 			System.out.println("No se anadio a la pila. Compruebe el nombre de "+valor);
 		}
+	}
+
+	public void colocarDatoEnPila(double valor) {
+		pilaNumero.push(valor);
 	}
 
 	private void sacarDatoDeFuncion(String linea){
@@ -248,7 +252,9 @@ public class OpMat {
 						parametrosEntrada += buscarVariable(separar[i])+",";
 					}	
 				}
-				parametrosEntrada = parametrosEntrada.substring(0, parametrosEntrada.length()-1);
+				if(parametrosEntrada.length()>0){
+					parametrosEntrada = parametrosEntrada.substring(0, parametrosEntrada.length()-1);
+				}
 
 				String valor = entry.getValue().sacarValorFuncion(funciones, parametrosEntrada);
 				if(entry.getValue().getretorno().equals("entero")){
@@ -264,9 +270,8 @@ public class OpMat {
 		
 
 	}
-	public void colocarDatoEnPila(double valor) {
-		pilaNumero.push(valor);
-	}
+	
+	
 	
     //DUDA DE BORRAR
 	public HashMap<String,Integer> getTablaInt() {

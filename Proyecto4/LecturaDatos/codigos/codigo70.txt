@@ -1,0 +1,9 @@
+entero base   
+entero altura   
+real area   		
+leer base   
+leer altura   
+area = ( ( base ) * altura / 2 )
+imprimeS ('El valor de base es: ',base)
+imprimeS ('El valor de altura es: ',altura)     	
+imprimeS ('El valor de area es: ',area)
