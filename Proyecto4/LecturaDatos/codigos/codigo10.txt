@@ -6,13 +6,20 @@ texto prueba = 'Hi there'
 
 void inicio(){
 entero base   
-entero altura   
+entero altura
+entero sumatoria
 real area   		
-leer base   
-leer altura
+base = 12  
+altura = 30
+base = base + baseA
+sumatoria = sumar(base,altura)
 imprimeS ('El valor de base es: ',base)
-imprimeS ('El valor de altura es: ',altura)  
+imprimeS ('El valor de altura es: ',altura)
+imprimeS ('El valor sumado es de: ',sumatoria)    
+}
 
+int sumar(entero x,entero y){
+return x + y + alturaG
 }
 
 

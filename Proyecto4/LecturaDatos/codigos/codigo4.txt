@@ -4,7 +4,7 @@ void inicio(){
 entero x
 x = 2
 x = x + 1
-x = x + 2
+x = x + 5
 imprimeS ('X vale:',x)
 si (x <= 3){
 imprimeS ('Imprime el primer caso ')

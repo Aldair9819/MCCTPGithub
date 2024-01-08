@@ -10,19 +10,28 @@ import Proyecto4.LecturaDatos.Funcion;
 public class OpMat {
 	//ignorar esto de abajo
 	private HashMap<String, Funcion > funciones;
-	private HashMap<String,String> tablaTexto = new HashMap<>();
-	private Stack<String> pilaTexto = new Stack<String>();
-	//IGNORAR ESTO DE ARRIBA
-	
+
     private HashMap<String,Integer> tablaInt = new HashMap<>();
 	private HashMap<String,Double> tablaDouble = new HashMap<>();
+	private HashMap<String,String> tablaTexto = new HashMap<>();
+	
+
+	private HashMap<String,Integer> tablaGInt = new HashMap<String,Integer>();
+	private HashMap<String,Double> tablaGDouble = new HashMap<String,Double>();
+	private HashMap<String,String> tablaGTexto = new HashMap<String,String>();
 
 	private Stack<Double> pilaNumero = new Stack<Double>();
 	private Stack<String> pilaOperador = new Stack<String>();
+	private Stack<String> pilaTexto = new Stack<String>();
 	
-	//Ignora este constructor
 	public OpMat(HashMap<String, Funcion > funciones) {
 		this.funciones = funciones;
+	}
+
+	public void inicializarGlobales(HashMap<String,Integer> tablaGInt,HashMap<String,Double> tablaGDouble,HashMap<String,String> tablaGTexto){
+		this.tablaGInt = tablaGInt;
+		this.tablaGDouble = tablaGDouble;
+		this.tablaGTexto = tablaGTexto;
 	}
 	
 	//Inicializa Variable
@@ -57,6 +66,20 @@ public class OpMat {
                 return;
 			}
 		}
+
+		for(Entry<String, Integer> entry: tablaGInt.entrySet()) {
+			if(entry.getKey().equals(Variable)) {
+				tablaGInt.put(Variable, (int) valor);
+                return;
+			}
+		}
+
+		for(Entry<String, Double> entry: tablaGDouble.entrySet()) {
+			if(entry.getKey().equals(Variable)) {
+				tablaGDouble.put(Variable, valor);
+                return;
+			}
+		}
         System.out.println("No se encontro la Variable "+Variable);
 	}
 
@@ -67,11 +90,24 @@ public class OpMat {
                 return;
 			}
 		}
+
+		for(Entry<String, String> entry: tablaGTexto.entrySet()) {
+			if(entry.getKey().equals(Variable)) {
+				tablaGTexto.put(Variable, valor);
+                return;
+			}
+		}
         System.out.println("No se encontro el Variable "+Variable);
 	}
 	
 	public String buscarVariableTexto(String nombre){
 		for(Entry<String, String> entry: tablaTexto.entrySet()) {
+			if(entry.getKey().equals(nombre)) {
+				return entry.getValue();
+			}
+		}
+
+		for(Entry<String, String> entry: tablaGTexto.entrySet()) {
 			if(entry.getKey().equals(nombre)) {
 				return entry.getValue();
 			}
@@ -93,6 +129,18 @@ public class OpMat {
 				return entry.getValue();
 			}
 		}
+
+		for(Entry<String, Integer> entry: tablaGInt.entrySet()) {
+			if(entry.getKey().equals(nombre)) {
+				return entry.getValue();
+			}
+		}
+		
+		for(Entry<String, Double> entry: tablaGDouble.entrySet()) {
+			if(entry.getKey().equals(nombre)) {
+				return entry.getValue();
+			}
+		}
 		System.out.print(nombre+" no existe.");
 		return 0;
 	}
@@ -110,11 +158,29 @@ public class OpMat {
 			}
 		}
 
+		for(Entry<String, Integer> entry: this.tablaGInt.entrySet()) {
+			if(entry.getKey().equals(nombre)) {
+				return true;
+			}
+		}
+		
+		for(Entry<String, Double> entry: this.tablaGDouble.entrySet()) {
+			if(entry.getKey().equals(nombre)) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 
 	public boolean isVariableTextoExist(String nombre){
 		for(Entry<String, String> entry: this.tablaTexto.entrySet()) {
+			if(entry.getKey().equals(nombre)) {
+				return true;
+			}
+		}
+
+		for(Entry<String, String> entry: this.tablaGTexto.entrySet()) {
 			if(entry.getKey().equals(nombre)) {
 				return true;
 			}
@@ -157,7 +223,6 @@ public class OpMat {
 		return valor;
 	}
 	
-
 	public void colocarOperadorEnPila(String operador) {
 		if(pilaOperador.isEmpty()||operador.equals(OPERADOR.getParentesis())) {
 			pilaOperador.push(operador);

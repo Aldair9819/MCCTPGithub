@@ -31,10 +31,10 @@ public class InterpreteNoBucle {
 			System.out.println();
                 
             } catch (NumberFormatException e) {
-                System.out.println("Error en leer.");
+                //System.out.println("--->Error en leer.");
             }
             }else{
-                System.out.println("Error. No existe la variable");
+                //System.out.println("--->Error. No existe la variable");
             }
             
             break;
@@ -59,7 +59,7 @@ public class InterpreteNoBucle {
                 System.out.println();
             }
             }catch(StringIndexOutOfBoundsException e){
-                System.out.println("Error en imprime");
+                //System.out.println("--->Error en imprime");
             }
             
 
@@ -69,8 +69,10 @@ public class InterpreteNoBucle {
             case "real":
 			variable = lineaSeparada[1];
 			opMat.inicializarVariable(comando, variable);
-            if(!variable.equals("return"))
-            System.out.println("Declarada variable "+variable+" de tipo "+comando);
+            if(!variable.equals("return")){
+                //System.out.println("--->Declarada variable "+variable+" de tipo "+comando);
+            }
+            
             break;
 
             default:
@@ -85,8 +87,10 @@ public class InterpreteNoBucle {
             }
             opMat.vaciarPilaOperador();
             opMat.asignarValorVariable(variable, opMat.retiraNumPila());
-            if(!variable.equals("return"))
-            System.out.println("Se asigno el valor "+opMat.buscarVariable(variable)+" a la variable "+variable);
+            if(!variable.equals("return")){
+                //System.out.println("--->Se asigno el valor "+opMat.buscarVariable(variable)+" a la variable "+variable);
+            }
+            
             
         }else if(opMat.isVariableTextoExist(variable)){
             ArrayList<String> textoCompleto = new ArrayList<String>();
@@ -102,12 +106,12 @@ public class InterpreteNoBucle {
             opMat.vaciarPilaOperador();
             opMat.asignarValorVariable(variable, opMat.retiraTextoPila());
             if(!variable.equals("return")){
-                System.out.println("Se asigno el valor de texto -"+opMat.buscarVariableTexto(variable)+"- a la variable "+variable);
+                //System.out.println("--->Se asigno el valor de texto -"+opMat.buscarVariableTexto(variable)+"- a la variable "+variable);
             }
             
         }
         else{
-            System.out.println("Error. No existe la variable");
+            //System.out.println("--->Error. No existe la variable");
         }
         break;
             }
@@ -169,5 +173,9 @@ public class InterpreteNoBucle {
 	public OpMat getOperaciones() {
 		return this.opMat;
 	}
+
+    public void inicializarGlobales(HashMap<String,Integer> tablaGInt,HashMap<String,Double> tablaGDouble,HashMap<String,String> tablaGTexto){
+        opMat.inicializarGlobales(tablaGInt, tablaGDouble, tablaGTexto);
+    }
     
 }

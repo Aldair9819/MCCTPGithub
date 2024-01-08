@@ -1,0 +1,118 @@
+Programa miPrimerCodigo1.1{
+
+entero baseA = 15
+entero alturaG = 17
+real areaD = 17.5
+texto prueba = 'Hi there'
+
+
+
+int valorPI(){
+return 4
+}
+
+int operacionSencilla(){
+return 12 * 2 + 7
+}
+
+double operacionArit(){
+entero z
+z = 12.3 * 2.7 + 3.9
+imprimeS ('Valor inicial de z vale:',z)
+return z
+}
+
+int sinoLa(entero x,entero y){
+entero final
+final = x + y
+imprimeS ('Valor de final dentro de funcion es: ',final)
+return final
+}
+
+int sumar(entero x,entero y){
+return x + y + alturaG
+}
+
+
+void inicio(){
+texto hola
+texto hellou
+
+entero sumatoria
+
+entero base
+entero altura
+entero suma
+real area
+leer base
+leer altura
+
+entero x
+entero y
+entero suma   
+y = 0
+x = 2
+imprimeS ('Valor inicial de X vale:',x)
+imprimeS ('Valor inicial de y vale:',y)
+imprimeS ('Para el caso Mientras:')
+mientras (x < 6){
+y = 0
+imprimeS ('X vale:',x)
+imprimeS ('Hola Mundo ')
+mientras (y < 3){
+imprimeS ('Y vale:',y)
+y = y + 1
+}
+x = x + 1
+
+}
+imprimeS ('')
+imprimeS ('Para el caso If-Else:')
+x = x + 1
+x = x + 5
+imprimeS ('X vale:',x)
+si (x <= 3){
+imprimeS ('Imprime el primer caso ')
+}
+sino si (x > 4){
+imprimeS ('Imprime el segundo caso ')
+si (x > 5){
+imprimeS ('Imprime que es mayor a 5 ')
+}
+}
+sino{
+imprimeS ('Imprime el tercer caso ')
+}
+
+imprimeS ('')
+imprimeS ('Para el caso de funciones sin argumentos:')
+
+imprimeS ('Valor inicial de X vale:',x)
+x = x + valorPI()
+imprimeS ('Valor segundo de X vale:',x)
+x = x + operacionArit()
+imprimeS ('Valor final de X vale:',x)
+
+imprimeS ('')
+imprimeS ('Para el caso de funciones con argumentos y logica entre parentesis:')
+
+suma = sinoLa(base,altura)
+area = ( ( base + 2 ) * altura / 2 )
+imprimeS ('El valor de base es: ',base)
+imprimeS ('El valor de altura es: ',altura)
+imprimeS ('El valor de area sumandole 2 a la base es: ',area)
+imprimeS ('El valor de suma es: ',suma)
+
+imprimeS ('')
+imprimeS ('Para el caso de texto:')
+hellou = 'This is a hello message'
+hola = 'Hola, y Hola ' + ' in english is ' + hellou
+imprimeS ('El valor de hola es: ',hola)
+
+imprimeS ('')
+imprimeS ('Para el caso de variables globales:')
+sumatoria = sumar(base,altura)
+imprimeS ('El valor sumado es de: ',sumatoria,'.Recordando que se le sumo el valor adicional de ',alturaG)
+
+}
+}

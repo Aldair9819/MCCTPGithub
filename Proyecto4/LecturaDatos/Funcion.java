@@ -18,14 +18,24 @@ public class Funcion{
     //private Scanner sc = new Scanner(System.in);
     private String valorRetorno;
 
+    private HashMap<String,Integer> tablaGInt ;
+	private HashMap<String,Double> tablaGDouble ;
+	private HashMap<String,String> tablaGTexto ;
+
     public Funcion( Stack<String> comandos,String parametros, String retorno) {
         this.comandos = comandos;
         this.parametros = parametros;
         this.retorno = retorno;
     }
 
-    public void main(HashMap<String, Funcion> funciones,String parametrosEntrada){
+    public void main(HashMap<String, Funcion> funciones,String parametrosEntrada,
+    HashMap<String,Integer> tablaGInt,HashMap<String,Double> tablaGDouble,
+    HashMap<String,String> tablaGTexto){
         this.interprete = new InterpreteNoBucle(funciones);
+        this.tablaGInt = tablaGInt;
+        this.tablaGDouble = tablaGDouble;
+        this.tablaGTexto = tablaGTexto;
+        this.inicializarGlobales(tablaGInt, tablaGDouble, tablaGTexto);
         declararParametros(parametrosEntrada);
         Stack <String> comandosAux = new Stack<String>();
         comandosAux.addAll(comandos);
@@ -49,13 +59,16 @@ public class Funcion{
 
     }
 
+    public void inicializarGlobales(HashMap<String,Integer> tablaGInt,HashMap<String,Double> tablaGDouble,HashMap<String,String> tablaGTexto){
+        this.interprete.inicializarGlobales(tablaGInt, tablaGDouble, tablaGTexto);
+    }
+
     private void declararParametros(String parametrosEntrada){
         //Sin filtro: (2,5,7)
         //Parametro entrada ejemplo: 2,5,7
         if(parametrosEntrada.equals("")){
             return;
         }
-        System.out.println("Entra:-"+parametrosEntrada+"-");
          String[] variablesParametros = parametros.split(",");
          String[] variablesEntrada = parametrosEntrada.split(",");
          for(int i = 0; i<variablesParametros.length;i++){
@@ -73,7 +86,7 @@ public class Funcion{
 
     public String sacarValorFuncion(HashMap<String, Funcion> funciones, String declararParametros){
         //Aqui también ya llega con filtro
-        main(funciones, declararParametros);
+        main(funciones, declararParametros, tablaGInt, tablaGDouble, tablaGTexto);
         return valorRetorno;
     }
 
@@ -117,7 +130,7 @@ public class Funcion{
         String parametrosEntrada = linea.substring(linea.indexOf("(")+1, linea.indexOf(")"));
         for(int i = 0; i<funciones.size();i++){
             if(linea.contains(funciones.keySet().toArray()[i].toString())){
-                funciones.get(funciones.keySet().toArray()[i]).main(funciones, parametrosEntrada);
+                funciones.get(funciones.keySet().toArray()[i]).main(funciones, parametrosEntrada, tablaGInt, tablaGDouble, tablaGTexto);
             }
         }
 
@@ -299,6 +312,13 @@ public class Funcion{
     private boolean repetirCicloCaso(String linea, Stack<String> llavesSiSino){
         return (linea.contains(CASOCICLO.SINO.toString()) || linea.contains(CASOCICLO.SI.toString())|| !llavesSiSino.isEmpty());
     }
+
+    public void inicializarVariablesGlobales(HashMap<String,Integer> tablaGInt,HashMap<String,Double> tablaGDouble,HashMap<String,String> tablaGTexto){
+        this.tablaGInt = tablaGInt;
+        this.tablaGDouble = tablaGDouble;
+        this.tablaGTexto = tablaGTexto;
+    }
+
 
 
    

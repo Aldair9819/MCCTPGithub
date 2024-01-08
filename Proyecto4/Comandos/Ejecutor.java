@@ -2,6 +2,7 @@ package Proyecto4.Comandos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.Stack;
 
 import Proyecto4.Constantes.CM;
@@ -9,36 +10,35 @@ import Proyecto4.LecturaDatos.Funcion;
 import java.util.Map.Entry;
 
 public class Ejecutor {
-    private HashMap<String,Integer> tablaGInt = new HashMap<>();
-	private HashMap<String,Double> tablaGDouble = new HashMap<>();
-	private HashMap<String,String> tablaGTexto = new HashMap<>();
+    private HashMap<String,Integer> tablaGInt = new HashMap<String,Integer>();
+	private HashMap<String,Double> tablaGDouble = new HashMap<String,Double>();
+	private HashMap<String,String> tablaGTexto = new HashMap<String,String>();
 	private HashMap<String, Funcion > funciones;
 	private Stack<String> programaActual = new Stack<String>();
 	private String nombrePrograma;
 	private InterpreteNoBucle acciones;
+	Scanner sc = new Scanner(System.in);
 	
 	public Ejecutor(String nombrePrograma,HashMap<String, Funcion > funciones,ArrayList<String> variables ) {
 		this.nombrePrograma = nombrePrograma;
 		this.funciones = funciones;
 		acciones = new InterpreteNoBucle(funciones);
-	
-		 
+		
+
 		for(int i = 0;i<variables.size();i++) {
 			initLitGlobal(variables.get(i));
 		}
 
-		for(Entry<String,Integer > entry: this.tablaGInt.entrySet()) {
-			System.out.println(entry.getKey()+"->"+entry.getValue());
-		}
-
-
+		for(Entry<String,Funcion > entry: this.funciones.entrySet()) {
+			entry.getValue().inicializarVariablesGlobales(tablaGInt, tablaGDouble, tablaGTexto);
+			}
 
 		}
 	public void inicializar() {
 		System.out.println("Inicia programa...\n");
 		for(Entry<String,Funcion > entry: this.funciones.entrySet()) {
 			if(entry.getKey().equals("inicio")) {
-				entry.getValue().main(this.funciones,"");
+				entry.getValue().main(this.funciones,"",tablaGInt,tablaGDouble,tablaGTexto);
 				break;
 			}
 			}
