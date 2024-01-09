@@ -118,7 +118,8 @@ public class InterpreteNoBucle {
 
             
 		}
-
+    
+    //Metodo que separa las variables de Texto para su correcta asignacion
     private ArrayList<String> separadorTexto(ArrayList<String> textoCompleto){
         String texto = "";
         for(int i=0;i<textoCompleto.size();i++){
@@ -148,10 +149,12 @@ public class InterpreteNoBucle {
         return todos;
     }
 
-    public int contarRepeticionSimbolo(String texto, String simbolo){
+    //Metodo que cuenta las veces que se repite un simbolo en un texto
+    private int contarRepeticionSimbolo(String texto, String simbolo){
         return texto.length() - texto.replace(simbolo, "").length();
     }
 
+    
     public boolean isNumero(String dato){
             try{
                 Double.parseDouble(dato);
@@ -169,11 +172,6 @@ public class InterpreteNoBucle {
 		return opMat.buscarVariableTexto(nombre);
 	}
 	
-
-	public OpMat getOperaciones() {
-		return this.opMat;
-	}
-
     public void inicializarGlobales(HashMap<String,Integer> tablaGInt,HashMap<String,Double> tablaGDouble,HashMap<String,String> tablaGTexto){
         opMat.inicializarGlobales(tablaGInt, tablaGDouble, tablaGTexto);
     }

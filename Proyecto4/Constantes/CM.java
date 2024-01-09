@@ -1,7 +1,9 @@
 package Proyecto4.Constantes;
 
 public enum CM {
-LEER("leer"),  IMPRIME("imprime"),IMPRIMES("imprimeS"),ENTERO("entero"), REAL("real"), TEXTO("texto"), IGUAL("=");
+LEER("leer"),  IMPRIME("imprime"),IMPRIMES("imprimeS"),
+ENTERO("entero"), REAL("real"), TEXTO("texto"), 
+IGUAL("=");
 	
 	private String comando;
 	

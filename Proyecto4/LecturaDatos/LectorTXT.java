@@ -15,7 +15,7 @@ import Proyecto4.Constantes.CM;
 
 public class LectorTXT {
     String Null = "";
-	private final String Ruta = "Proyecto4/LecturaDatos/codigos/codigoFinal.txt";
+	private final String Ruta = "Proyecto4/LecturaDatos/codigos/";
 	
 	// nombreFuncion, comandos (Stack), parametros, tipo de retorno
 	private HashMap<String, Funcion > funciones = new HashMap<>();
@@ -25,9 +25,9 @@ public class LectorTXT {
 	private Stack<String> llavesFuncion = new Stack<String>();
 	private Stack<String> llavesDemas = new Stack<String>();
 	
-	public ArrayList<String> leerTexto() {//Lista de funciones y sus datos
+	public ArrayList<String> leerTexto(String numeroCodigo) {//Lista de funciones y sus datos
 		ArrayList<String> informacion = new ArrayList<String>();
-		try(BufferedReader bf = new BufferedReader(new FileReader(Ruta))){//Lee los datos
+		try(BufferedReader bf = new BufferedReader(new FileReader(Ruta+"codigo"+numeroCodigo+".txt"))){//Lee los datos
 			String s;
 			while((s = bf.readLine())!=null) {//Hasta que no haya linea para leer
 				if(!s.replace(" ", "").equals(""))
@@ -42,11 +42,11 @@ public class LectorTXT {
 		
 	}
 	
-	public void iniciar() {
+	public void iniciar(String numeroCodigo) {
 		//Referencia de la ruta del archivo
 		//System.out.println(Ruta);
 
-		organizarPrograma(leerTexto());
+		organizarPrograma(leerTexto(numeroCodigo));
 		
 		//getDatosTotales();
 	}

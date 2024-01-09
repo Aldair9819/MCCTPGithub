@@ -1,7 +1,8 @@
 package Proyecto4.Constantes;
 
 public enum OPCOMPARAR{
-	MAYOR(">"), MAYORIGUAL(">="), MENOR("<"), MENORIGUAL("<="),
+	MAYOR(">"), MAYORIGUAL(">="), MENOR("<"), 
+	MENORIGUAL("<="),
 	DISTINTO("<>"),IGUALCOMPARA("==");
 
 	

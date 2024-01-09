@@ -249,10 +249,14 @@ public class OpMat {
 
     public void vaciarPilaOperador(String operadorAMeter) {
 		while(true) {
-			if(pilaOperador.isEmpty() || (pilaOperador.peek().equals(OPERADOR.getParentesis() )
+			if(pilaOperador.isEmpty() || 
+			(pilaOperador.peek().equals(OPERADOR.getParentesis() )
 			&& !operadorAMeter.equals(OPERADOR.getParentesisCerrado()))) {
 				return;
-			}else if(pilaOperador.peek().equals(OPERADOR.getParentesis())) {
+			}else if(OPERADOR.isMayor(operadorAMeter, pilaOperador.peek())) {
+				return;
+			}
+			else if(pilaOperador.peek().equals(OPERADOR.getParentesis())) {
 				pilaOperador.pop();
 				return;
 			}

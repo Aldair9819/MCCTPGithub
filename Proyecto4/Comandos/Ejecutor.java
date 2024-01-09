@@ -40,7 +40,7 @@ public class Ejecutor {
 			}
 			}
 			
-		
+		System.out.println("Finaliza programa...\n");
 		}
 
 	private void initLitGlobal(String texto) {

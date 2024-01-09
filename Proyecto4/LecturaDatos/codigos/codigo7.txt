@@ -9,7 +9,7 @@ return 12 * 2 + 7
 }
 
 double operacionArit(){
-entero z
+real z
 z = 12.3 * 2.7 + 3.9
 imprimeS ('Valor inicial de z vale:',z)
 return z
@@ -17,7 +17,7 @@ return z
 
 
 void inicio(){
-entero x
+real x
 x = 5
 imprimeS ('Valor inicial de X vale:',x)
 x = x + valorPI()
