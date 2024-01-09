@@ -24,7 +24,6 @@ CUARTO(new String[]{"(",")"},0);
 				}
 			}
 		}
-		System.out.println("No se encontro valor. Retornara cero");
 		return 0;
 	}
 	
