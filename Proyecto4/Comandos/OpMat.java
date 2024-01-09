@@ -227,13 +227,13 @@ public class OpMat {
 		if(pilaOperador.isEmpty()||operador.equals(OPERADOR.getParentesis())) {
 			pilaOperador.push(operador);
 		}else if(operador.equals(OPERADOR.getParentesisCerrado())){
-			vaciarPilaOperador();
+			vaciarPilaOperador(operador);
 		}
 		else if(OPERADOR.isMayor(operador, pilaOperador.peek())) {
 			pilaOperador.push(operador);
 		}
 		else {
-            vaciarPilaOperador();
+            vaciarPilaOperador(operador);
 			pilaOperador.push(operador);
 		}
 	}
@@ -247,9 +247,10 @@ public class OpMat {
 		return false;
 	}
 
-    public void vaciarPilaOperador() {
+    public void vaciarPilaOperador(String operadorAMeter) {
 		while(true) {
-			if(pilaOperador.isEmpty()) {
+			if(pilaOperador.isEmpty() || (pilaOperador.peek().equals(OPERADOR.getParentesis() )
+			&& !operadorAMeter.equals(OPERADOR.getParentesisCerrado()))) {
 				return;
 			}else if(pilaOperador.peek().equals(OPERADOR.getParentesis())) {
 				pilaOperador.pop();
@@ -338,44 +339,6 @@ public class OpMat {
 	
 	
 	
-    //DUDA DE BORRAR
-	public HashMap<String,Integer> getTablaInt() {
-		return this.tablaInt;
-		
-	}
-	
-	public HashMap<String,Double> getTablaDouble() {
-		return this.tablaDouble;
-		
-	}
 
-    //IMPRESIONES. SE PUEDEN IGNORAR    
-    public void imprimeValorTope() {
-		if(pilaOperador.isEmpty()) {
-			System.out.println("Valor tope en operador es nulo");
-		}else {
-			System.out.println("Valor tope en operador: "+pilaOperador.peek());
-		}
-		if(pilaNumero.isEmpty()) {
-			System.out.println("Valor tope en numero es nulo");
-		}else {
-			System.out.println("Valor tope en numero es: "+pilaNumero.peek());
-		}
-		
-	}
-
-    public void RecorreDatosTablas() {
-		System.out.println("Tabla entera de valores:");
-		System.out.println("Enteros:");
-		for(Entry<String, Integer> entry: tablaInt.entrySet()) {
-			System.out.println(entry.getKey()+" -> "+entry.getValue());
-		}
-		System.out.println();
-		System.out.println("Reales:");
-		for(Entry<String, Double> entry: tablaDouble.entrySet()) {
-			System.out.println(entry.getKey()+" -> "+entry.getValue());
-		}
-		System.out.println();
-	}
     
 }

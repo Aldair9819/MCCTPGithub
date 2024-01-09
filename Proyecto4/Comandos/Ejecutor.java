@@ -3,9 +3,7 @@ package Proyecto4.Comandos;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.Stack;
 
-import Proyecto4.Constantes.CM;
 import Proyecto4.LecturaDatos.Funcion;
 import java.util.Map.Entry;
 
@@ -14,7 +12,6 @@ public class Ejecutor {
 	private HashMap<String,Double> tablaGDouble = new HashMap<String,Double>();
 	private HashMap<String,String> tablaGTexto = new HashMap<String,String>();
 	private HashMap<String, Funcion > funciones;
-	private Stack<String> programaActual = new Stack<String>();
 	private String nombrePrograma;
 	private InterpreteNoBucle acciones;
 	Scanner sc = new Scanner(System.in);
@@ -32,7 +29,7 @@ public class Ejecutor {
 		for(Entry<String,Funcion > entry: this.funciones.entrySet()) {
 			entry.getValue().inicializarVariablesGlobales(tablaGInt, tablaGDouble, tablaGTexto);
 			}
-
+			//imprimeDatosAlmacenados();
 		}
 	public void inicializar() {
 		System.out.println("Inicia programa...\n");
@@ -97,8 +94,8 @@ public class Ejecutor {
 		
 
 
-
-	public void imprimeDatosAlmacenados() {
+	/* 
+	private void imprimeDatosAlmacenados() {
 		System.out.println("Datos almacenados:");
 		System.out.println("Nombre del programa:"+this.nombrePrograma);
 		System.out.println("Tabla entera de valores:");
@@ -123,5 +120,5 @@ public class Ejecutor {
 		}
 		System.out.println();
 	}
-	
+	//*/
 }

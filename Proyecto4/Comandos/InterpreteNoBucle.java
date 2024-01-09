@@ -85,7 +85,7 @@ public class InterpreteNoBucle {
                     opMat.colocarDatoEnPila(lineaSeparada[i]);
                 }    
             }
-            opMat.vaciarPilaOperador();
+            opMat.vaciarPilaOperador("");
             opMat.asignarValorVariable(variable, opMat.retiraNumPila());
             if(!variable.equals("return")){
                 //System.out.println("--->Se asigno el valor "+opMat.buscarVariable(variable)+" a la variable "+variable);
@@ -103,7 +103,7 @@ public class InterpreteNoBucle {
             for(int i= 0;i<textoSeparado.size();i++) {
                 opMat.colocarDatoEnPilaString(textoSeparado.get(i));
             }
-            opMat.vaciarPilaOperador();
+            opMat.vaciarPilaOperador("");
             opMat.asignarValorVariable(variable, opMat.retiraTextoPila());
             if(!variable.equals("return")){
                 //System.out.println("--->Se asigno el valor de texto -"+opMat.buscarVariableTexto(variable)+"- a la variable "+variable);

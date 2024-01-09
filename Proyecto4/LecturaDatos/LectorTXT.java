@@ -9,13 +9,12 @@ import java.util.Stack;
 
 import Proyecto4.Constantes.CASOCICLO;
 import Proyecto4.Constantes.CM;
-import java.util.Map.Entry;
+
+
+//import java.util.Map.Entry;
 
 public class LectorTXT {
     String Null = "";
-	//private final String NombreArchivo = "codigo2.txt";
-	//private final String NombreCarpeta = "codigos";
-	//private final String Ruta = NombreCarpeta+ "\\"+NombreArchivo;
 	private final String Ruta = "Proyecto4/LecturaDatos/codigos/codigoFinal.txt";
 	
 	// nombreFuncion, comandos (Stack), parametros, tipo de retorno
@@ -44,38 +43,15 @@ public class LectorTXT {
 	}
 	
 	public void iniciar() {
-		System.out.println(Ruta);
+		//Referencia de la ruta del archivo
+		//System.out.println(Ruta);
+
 		organizarPrograma(leerTexto());
+		
 		//getDatosTotales();
 	}
 	
-	public void getDatosTotales() {
-		System.out.println("Nombre del programa:"+this.nombrePrograma);
 
-// ...
-
-Stack<String> primero = new Stack<String>();
-
-for (Entry<String, Funcion> entry : funciones.entrySet()) {
-    System.out.println("Funcion " + entry.getKey() + ":");
-	System.out.println("Parametros: " + entry.getValue().getParametros());
-	System.out.println("Tipo de retorno: " + entry.getValue().getretorno());
-    primero.addAll(funciones.get(entry.getKey()).getComandos());
-    while (true) {
-        if (primero.isEmpty()) {
-            break;
-        }
-        System.out.println("-->" + primero.pop());
-    }
-    System.out.println("\n");
-}
-
-		System.out.println("Datos globales:");
-		for(String datosGlobales:literalesGlobales) {
-			System.out.println(datosGlobales);
-		}
-	}
-	
 	public void organizarPrograma(ArrayList<String> programa) {
 		boolean anadirComandos= false;
 		String nombreFuncion=""; String parametrosFuncion = ""; String retorno = "";
@@ -115,16 +91,16 @@ for (Entry<String, Funcion> entry : funciones.entrySet()) {
 	}
 	
 	
-	public boolean terminaPrograma(String linea) {
+	private boolean terminaPrograma(String linea) {
 		return (linea.contains("}")) &&(llavesDemas.isEmpty() && llavesFuncion.isEmpty());
 	}
 	
 
-	public boolean haveKey(String linea) {
+	private boolean haveKey(String linea) {
 		return linea.contains("{");
 	}
 	
-	public boolean terminaFuncion(String linea) {
+	private boolean terminaFuncion(String linea) {
 		if(linea.contains("}")){
 			if(llavesDemas.isEmpty()) {
 				if(!terminaPrograma(linea)) {
@@ -138,7 +114,7 @@ for (Entry<String, Funcion> entry : funciones.entrySet()) {
 		return false;
 		}
 	
-	public boolean isFuncion(String texto) {
+	private boolean isFuncion(String texto) {
 		if(!(CM.isComando(texto) || CASOCICLO.isCASOCICLO(texto)) && haveKey(texto)) {
 			llavesFuncion.push("{");
 			return true;
@@ -161,10 +137,35 @@ for (Entry<String, Funcion> entry : funciones.entrySet()) {
 	public HashMap<String, Funcion> getFunciones() {
 		return this.funciones;
 	}
-/* 
-	private boolean isFunction(String linea) {
-		return linea.contains("(") && CASOCICLO.isCASOCICLO(linea);
+
+		/* 
+	private void getDatosTotales() {
+		System.out.println("Nombre del programa:"+this.nombrePrograma);
+
+// ...
+
+Stack<String> primero = new Stack<String>();
+
+for (Entry<String, Funcion> entry : funciones.entrySet()) {
+    System.out.println("Funcion " + entry.getKey() + ":");
+	System.out.println("Parametros: " + entry.getValue().getParametros());
+	System.out.println("Tipo de retorno: " + entry.getValue().getretorno());
+    primero.addAll(funciones.get(entry.getKey()).getComandos());
+    while (true) {
+        if (primero.isEmpty()) {
+            break;
+        }
+        System.out.println("-->" + primero.pop());
+    }
+    System.out.println("\n");
+}
+
+		System.out.println("Datos globales:");
+		for(String datosGlobales:literalesGlobales) {
+			System.out.println(datosGlobales);
+		}
 	}
-*/
-    
+	
+	//*/
+
 }
