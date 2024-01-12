@@ -114,5 +114,26 @@ imprimeS ('Para el caso de variables globales:')
 sumatoria = sumar(base,altura)
 imprimeS ('El valor sumado es de: ',sumatoria,'.Recordando que se le sumo el valor adicional de ',alturaG)
 
+imprimeS ('')
+imprimeS ('Prueba de parentesis:')
+real a
+real b
+real c
+
+real x1
+real x2
+
+a = 1
+b = -5
+c = 6
+
+
+x1 = ( ( -1 * b ) + ( ( ( b ^ 2 ) - ( 4 * a * c ) ) ^ ( 1 / 2 ) ) ) / ( 2 * a )
+x2 = ( ( -1 * b ) - ( ( ( b ^ 2 ) - ( 4 * a * c ) ) ^ ( 1 / 2 ) ) ) / ( 2 * a )
+
+
+imprimeS ('El valor del x1 es: ',x1)
+imprimeS ('El valor del x2 es: ',x2)
+
 }
 }

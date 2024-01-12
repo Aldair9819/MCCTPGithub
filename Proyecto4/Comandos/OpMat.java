@@ -248,24 +248,27 @@ public class OpMat {
 	}
 
     public void vaciarPilaOperador(String operadorAMeter) {
-		while(true) {
-			if(pilaOperador.isEmpty() || 
-			(pilaOperador.peek().equals(OPERADOR.getParentesis() )
-			&& !operadorAMeter.equals(OPERADOR.getParentesisCerrado()))) {
-				return;
+		while(!pilaOperador.isEmpty()) {
+			if(pilaOperador.peek().equals(OPERADOR.getParentesis())) {
+				if(!operadorAMeter.equals(OPERADOR.getParentesisCerrado())){
+					return;
+				}
+				else if(operadorAMeter.equals(OPERADOR.getParentesisCerrado())) {
+					pilaOperador.pop();
+					return;
+				}
+				pilaOperador.pop();
 			}else if(OPERADOR.isMayor(operadorAMeter, pilaOperador.peek())) {
 				return;
 			}
-			else if(pilaOperador.peek().equals(OPERADOR.getParentesis())) {
-				pilaOperador.pop();
-				return;
-			}
+			
 			else {
 				if(pilaTexto.isEmpty()){
 					pilaNumero.push(realizaroperacion(
 						pilaNumero.pop(),pilaNumero.pop(),pilaOperador.pop()));
 				}else{
-					pilaTexto.push(realizaroperacion(pilaTexto.pop(), pilaTexto.pop(), pilaOperador.pop()));
+					pilaTexto.push(realizaroperacion(
+						pilaTexto.pop(), pilaTexto.pop(), pilaOperador.pop()));
 				}
 				
 			}
